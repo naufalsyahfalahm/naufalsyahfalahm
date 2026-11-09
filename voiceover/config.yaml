@@ -48,3 +48,34 @@ glossary:
   - RULA
 
 fillers: [um, uh, uhm, er, erm, hmm, ah]
+
+# --- Build stage (take scoring, cleaning, levelling, assembly) ---------------------------
+# Score = lower is better. Every term is a measurement; nothing is judged by ear.
+weights:
+  wer: 1.0                # WER vs script (ASR-based, see report caveat)
+  pacing: 0.30            # x |wpm - target_wpm| / target_wpm
+  pause: 0.02             # per pause longer than pause_max_s
+  noise: 0.005            # per dB the take's noise floor is above -45 dBFS
+  clipping: 0.10          # x min(1, clipped samples / build.clip_full_penalty_samples)
+  filler: 0.05            # per filler word or immediate repeat in the ASR text
+build:
+  lead_tail_s: 0.15       # silence kept before / after the voice
+  safety_s: 0.08          # extra context kept around each detected segment so word onsets are not clipped
+  pause_max_s: 0.8        # internal pauses longer than this ...
+  pause_to_s: 0.5         # ... are shortened to this
+  fade_ms: 20
+  max_stretch: 0.03       # atempo applied only if it alone brings the scene within budget (<= 3 %)
+  roomtone_s: 1.0
+  nr_db_try: [8, 6, 4, 2] # afftdn strength tried in order; first whose measured floor reduction is <= max_floor_reduction_db
+  max_floor_reduction_db: 10
+  deess_threshold_db: 6   # heuristic, uncalibrated: p95(5-9 kHz band) - median(1-4 kHz band) over speech frames
+  deess_amount: 0.2
+  loudness: {I: -16.0, TP: -1.5, LRA: 11, tolerance_LU: 1.0, tp_guard: 0.02}
+  f0_spread_flag: 0.15    # relative spread of median F0 across chosen scenes that triggers the voice-consistency warning
+  clip_full_penalty_samples: 20
+  hp_hz: 65               # 2nd-order high-pass; recording has strong subsonic/rumble energy
+  notch_hz: 48.3          # tonal hum peak measured in the silent frames of AI_No_Cut_Audio.mp3 (re-measure for new recordings)
+  notch_q: 20
+  floor_risk_dbfs: -40    # post-high-pass floor above this -> ARTEFACT RISK flag
+  deess_enabled: false    # heuristic flagged every scene, so it does not discriminate; index is reported only
+  voice_group_split_hz: 175  # measured median-F0 gap between two acoustic groups (takes cluster at 120-154 and 210-242 Hz). NOT a speaker label.
