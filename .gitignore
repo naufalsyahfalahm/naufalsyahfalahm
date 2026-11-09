@@ -1,0 +1,10 @@
+# Voiceover project: raw recordings, reference scripts and generated audio stay local
+raw/
+reference/
+voiceover/.venv/
+voiceover/models/
+voiceover/work/
+voiceover/out/
+*.wav
+*.mp3
+*.m4a
