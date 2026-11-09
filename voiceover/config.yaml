@@ -1,0 +1,50 @@
+# Voiceover pipeline configuration. Edit values here; re-run make_voiceover.py to regenerate.
+video: ergoaidesk            # ergoaidesk | ergofix
+
+# --- Scene budgets (seconds), in script order -------------------------------------------
+budgets:
+  ergoaidesk: {hook: 20, problem: 25, gap: 15, solution: 40, demo: 40, results: 20, closing: 20}
+  ergofix:    {hook: 28, problem: 18, gap: 22, bridge: 7, innovation: 20, feature1: 22, feature2: 19, feature3: 19, impact: 16, closing: 9}
+
+script:
+  ergoaidesk: ../reference/Skenario_Lomba_OUM.pdf       # parsed with pdftotext -layout
+  ergofix:    ../reference/ergofix-narration.md         # one block per scene, headed by scene name
+
+# --- Speakers / take selection (used from the choose-takes stage onward) -----------------
+raw_dir: ../raw                 # speaker label = sub-folder name (raw/A, raw/B). Never guessed from audio.
+voice_mode: best_per_scene      # best_per_scene | single_voice
+max_switches: 2
+switch_penalty: 0.10
+exclude: []                     # take files (relative to raw_dir) to ignore
+wer_max: 0.15                   # no take at or below this -> scene flagged RE-RECORD
+target_wpm: 130
+
+# --- Segmentation -------------------------------------------------------------------------
+segmentation:
+  min_silence_s: 0.7            # split at silences longer than this
+  frame_ms: 20
+  threshold_above_floor_db: 8   # speech threshold = noise floor (quietest 10 %) + this
+  min_segment_s: 0.40           # ignore blips shorter than this (clicks)
+  max_segment_s: 28.0           # ASR window limit is 30 s; longer segments split at the quietest frame
+  min_words_for_scene: 4        # segments with fewer ASR words (after dropping non-speech tags) are left unassigned
+  pad_s: 0.10                   # context added around a segment when sent to ASR
+
+# --- ASR (local only; audio never leaves the machine) -------------------------------------
+asr:
+  engine: sherpa-onnx-whisper   # OpenAI Whisper small.en converted to ONNX (k2-fsa release). Not faster-whisper:
+                                # huggingface.co is blocked in this environment.
+  model_dir: models/sherpa-onnx-whisper-small.en
+  num_threads: 4
+  word_timestamps: false        # this export has no cross-attention outputs -> segment-level times only
+
+# --- Terms whose transcription result is printed so pronunciation can be checked by ear --
+glossary:
+  - YOLOv11
+  - musculoskeletal
+  - ergonomic
+  - six degrees of freedom
+  - psychosocial
+  - ERGO-AI DESK
+  - RULA
+
+fillers: [um, uh, uhm, er, erm, hmm, ah]
