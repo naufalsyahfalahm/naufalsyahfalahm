@@ -5,6 +5,7 @@ import {
   CLOSING_CARD_AT,
   CLOSING_LOGOS,
   COLORS,
+  MAX_LOGO_UPSCALE,
   TEAM_NAMES,
   TEXT,
 } from "../config";
@@ -30,45 +31,71 @@ const NavyCard: React.FC = () => (
   </AbsoluteFill>
 );
 
-const PLATE_H = 156;
-const PAD_X = 26;
+const BAND_W = 1424;
+const BAND_H = 132;
 
-/** One logo on its own plate. Drawn at most at native pixel size (never enlarged), no filters. */
-const LogoPlate: React.FC<{
+/** One logo inside its cell of the band. Enlarged at most MAX_LOGO_UPSCALE, no filters. */
+const LogoCell: React.FC<{
   file: string;
   name: string;
-  plate: "white" | "navy";
+  tile: "none" | "navy";
   maxH: number;
+  last: boolean;
   at: number;
-}> = ({ file, name, plate, maxH, at }) => {
+}> = ({ file, name, tile, maxH, last, at }) => {
   const frame = useCurrentFrame();
   const info = assetInfo(file);
   if (!info.exists || !info.width || !info.height) return null;
-  const k = Math.min(1, maxH / info.height, 400 / info.width);
+  const k = Math.min(MAX_LOGO_UPSCALE, maxH / info.height, 236 / info.width);
   const w = Math.round(info.width * k);
   const h = Math.round(info.height * k);
-  const p = prog(frame, at, at + 22);
+  const p = prog(frame, at, at + 20);
+  const img = (
+    <Img
+      src={src(file)}
+      alt={name}
+      style={{ width: w, height: h, display: "block" }}
+    />
+  );
   return (
     <div
       style={{
-        width: w + 2 * PAD_X,
-        height: PLATE_H,
-        borderRadius: 20,
-        background: plate === "white" ? COLORS.white : COLORS.navy2,
-        border: plate === "white" ? "none" : `3px solid ${COLORS.grey}`,
-        boxSizing: "border-box",
+        flex: 1,
+        height: "100%",
+        position: "relative",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
         opacity: p,
-        transform: `translateY(${(1 - p) * 28}px)`,
+        transform: `translateY(${(1 - p) * 14}px)`,
       }}
     >
-      <Img
-        src={src(file)}
-        alt={name}
-        style={{ width: w, height: h, display: "block" }}
-      />
+      {tile === "navy" ? (
+        <div
+          style={{
+            background: COLORS.navy,
+            borderRadius: 14,
+            padding: "14px 20px",
+          }}
+        >
+          {img}
+        </div>
+      ) : (
+        img
+      )}
+      {last ? null : (
+        <div
+          style={{
+            position: "absolute",
+            right: 0,
+            top: 30,
+            bottom: 30,
+            width: 2,
+            background: COLORS.grey,
+            opacity: 0.7 * p,
+          }}
+        />
+      )}
     </div>
   );
 };
@@ -82,9 +109,7 @@ export const SceneClosing: React.FC = () => {
     transform: `translateY(${(1 - prog(frame, at, at + 24)) * 24}px)`,
   });
   const logos = CLOSING_LOGOS.filter((l) => hasAsset(l.file));
-  const ugmShown = CLOSING_LOGOS.some(
-    (l) => l.name === "Universitas Gadjah Mada" && hasAsset(l.file),
-  );
+  const band = prog(frame, CLOSING_CARD_AT + 100, CLOSING_CARD_AT + 124);
   return (
     <AbsoluteFill style={{ background: COLORS.navy }}>
       <FootageSlot kind="presenter" scale={zoom} fallback={<NavyCard />} />
@@ -93,7 +118,7 @@ export const SceneClosing: React.FC = () => {
           background: COLORS.navy,
           clipPath: `inset(0 0 0 ${(1 - p) * 100}%)`,
           alignItems: "center",
-          paddingTop: 150,
+          paddingTop: 165,
         }}
       >
         <div
@@ -114,7 +139,7 @@ export const SceneClosing: React.FC = () => {
             {TEXT.wordmark}
           </T>
         </div>
-        <div style={{ ...item(CLOSING_CARD_AT + 34), marginTop: 30 }}>
+        <div style={{ ...item(CLOSING_CARD_AT + 34), marginTop: 28 }}>
           <T
             size={64}
             font="heading"
@@ -129,51 +154,57 @@ export const SceneClosing: React.FC = () => {
         </div>
         <div
           style={{
-            ...item(CLOSING_CARD_AT + 70),
-            marginTop: 36,
+            ...item(CLOSING_CARD_AT + 60),
+            marginTop: 34,
             maxWidth: 1500,
           }}
         >
           <T
             size={48}
-            weight={600}
+            weight={400}
             maxLines={2}
             align="center"
-            color={COLORS.grey}
+            color={COLORS.white}
           >
             {TEAM_NAMES.join(" · ")}
           </T>
         </div>
-        {ugmShown ? null : (
-          <div style={{ ...item(CLOSING_CARD_AT + 90), marginTop: 20 }}>
-            <T
-              size={48}
-              weight={600}
-              maxLines={1}
-              align="center"
-              color={COLORS.lilac}
-            >
-              {AFFILIATION}
-            </T>
-          </div>
-        )}
+        <div style={{ ...item(CLOSING_CARD_AT + 76), marginTop: 12 }}>
+          <T
+            size={48}
+            weight={600}
+            maxLines={1}
+            align="center"
+            color={COLORS.grey}
+          >
+            {AFFILIATION}
+          </T>
+        </div>
+        {/* one white band with all partner logos and thin dividers */}
         <div
           style={{
-            display: "flex",
-            gap: 24,
-            alignItems: "center",
-            justifyContent: "center",
             marginTop: 44,
+            width: BAND_W,
+            height: BAND_H,
+            borderRadius: 28,
+            background: COLORS.white,
+            display: "flex",
+            alignItems: "center",
+            boxSizing: "border-box",
+            padding: "0 20px",
+            opacity: band,
+            transform: `translateY(${(1 - band) * 24}px)`,
           }}
         >
           {logos.map((l, i) => (
-            <LogoPlate
+            <LogoCell
               key={l.file}
               file={l.file}
               name={l.name}
-              plate={l.plate}
+              tile={l.tile}
               maxH={l.maxH}
-              at={CLOSING_CARD_AT + 100 + i * 14}
+              last={i === logos.length - 1}
+              at={CLOSING_CARD_AT + 108 + i * 10}
             />
           ))}
         </div>

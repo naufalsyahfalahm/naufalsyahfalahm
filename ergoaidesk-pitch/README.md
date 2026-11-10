@@ -128,7 +128,9 @@ If the voiceover changes, re-run `build-voiceover.py`, then `check:audio`, and u
 
 ## Closing-card logos
 
-Each logo sits on its own plate; a logo is never enlarged beyond its native size and has no filters.
-`ldtrc.png` is the official London Digital Twin Research Centre logo (500x169, from dt.mdx.ac.uk). Its text is white, so it is shown on a dark plate.
-`ugm.png` and `dsig.png` are the HD files supplied by the team. **`british-council.png` (177x51) and `middlesex.png` (104x104) are the low-resolution files supplied
-and should be replaced with the official HD files** (`npm run check` warns). The British Council and Middlesex marks are subject to their owners' brand rules; confirm permission for this use.
+The five logos sit in one white rounded band (1424x132 px) under the team names, separated by thin dividers, in the same placement as the ErgoFix pitch video
+(order: UGM, British Council, DSIG, London Digital Twin Research Centre, Middlesex; `CLOSING_LOGOS` in `src/config.ts`). A logo is enlarged by at most 1.3x and has no filters.
+`ldtrc.png` is the official London Digital Twin Research Centre logo (500x169, from dt.mdx.ac.uk); its text is white, so it sits on a small navy tile inside the band.
+`ugm.png` and `dsig.png` are the HD files supplied by the team. **`british-council.png` (177x51) and `middlesex.png` (104x104, the crest only) are the low-resolution files supplied
+and should be replaced with the official HD files** (`npm run check` warns). The ErgoFix video shows Middlesex as the horizontal crest-and-name lockup; that file was not supplied.
+The British Council and Middlesex marks are subject to their owners' brand rules; confirm permission for this use.

@@ -247,23 +247,25 @@ export const AFFILIATION = "Universitas Gadjah Mada";
 export const CLOSING_CARD_AT = 270; // tagline (+34 frames) lands on "Smarter assessment" at 170.1 s
 
 /**
- * Partner/affiliation logos on the closing card, left to right. Each sits on its own plate.
- * plate "white": logo drawn for light backgrounds. plate "navy": reversed (white-text) logo.
- * A logo is never enlarged beyond its native pixel size (so a low-resolution file stays sharp but small).
- * hd: false marks a supplied low-resolution file that should be replaced by the official HD file.
+ * Partner/affiliation logos on the closing card, left to right, in one white band with thin dividers
+ * (same placement as the ErgoFix pitch video). maxH is the logo height inside its cell.
+ * tile "navy": reversed (white-text) logo, shown on a small navy tile inside the band.
+ * A logo is enlarged by at most MAX_LOGO_UPSCALE; hd: false marks a supplied low-resolution file that
+ * should be replaced by the official HD file.
  */
+export const MAX_LOGO_UPSCALE = 1.3;
 export const CLOSING_LOGOS: ReadonlyArray<{
   file: string;
   name: string;
-  plate: "white" | "navy";
+  tile: "none" | "navy";
   maxH: number;
   hd: boolean;
 }> = [
-  { file: FILES.logoUgm, name: "Universitas Gadjah Mada", plate: "white", maxH: 108, hd: true },
-  { file: FILES.logoBritishCouncil, name: "British Council", plate: "white", maxH: 108, hd: false },
-  { file: FILES.logoDsig, name: "Digital Safety Intelligence Group", plate: "white", maxH: 116, hd: true },
-  { file: FILES.logoLdtrc, name: "London Digital Twin Research Centre", plate: "navy", maxH: 108, hd: true },
-  { file: FILES.logoMiddlesex, name: "Middlesex University", plate: "white", maxH: 116, hd: false },
+  { file: FILES.logoUgm, name: "Universitas Gadjah Mada", tile: "none", maxH: 64, hd: true },
+  { file: FILES.logoBritishCouncil, name: "British Council", tile: "none", maxH: 64, hd: false },
+  { file: FILES.logoDsig, name: "Digital Safety Intelligence Group", tile: "none", maxH: 70, hd: true },
+  { file: FILES.logoLdtrc, name: "London Digital Twin Research Centre", tile: "navy", maxH: 54, hd: true },
+  { file: FILES.logoMiddlesex, name: "Middlesex University", tile: "none", maxH: 84, hd: false },
 ];
 
 // ---------------------------------------------------------------- privacy

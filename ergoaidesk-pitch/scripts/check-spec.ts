@@ -164,7 +164,7 @@ for (const [label, p] of slots) console.log(`  ${ASSETS[p]?.exists ? "supplied  
 for (const l of C.CLOSING_LOGOS) {
   const a = ASSETS[l.file];
   if (a?.exists && a.width && a.height && Math.max(a.width, a.height) < 400) {
-    warn(`logo ${l.name}: only ${a.width}x${a.height}px${l.hd ? "" : " (supplied low-resolution file)"}; drawn at most at native size, replace with the official HD file`);
+    warn(`logo ${l.name}: only ${a.width}x${a.height}px${l.hd ? "" : " (supplied low-resolution file)"}; enlarged at most 1.3x, replace with the official HD file`);
   }
 }
 if (C.TEAM_NAMES.some((n) => n.startsWith("["))) console.log("  MISSING     team names (config.TEAM_NAMES)");
