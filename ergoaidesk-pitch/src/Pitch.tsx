@@ -3,6 +3,7 @@ import { AbsoluteFill, Audio, Sequence, interpolate, useCurrentFrame } from "rem
 import {
   COLORS,
   FILES,
+  FPS,
   MUSIC_FADE_IN,
   MUSIC_FADE_OUT,
   MUSIC_VOLUME,
@@ -10,6 +11,8 @@ import {
   SCENE_ORDER,
   TOTAL_FRAMES,
   TRANSITIONS,
+  VOICEOVER_FADE,
+  VOICEOVER_SEGMENTS,
   VOICEOVER_VOLUME,
   type SceneKey,
 } from "./config";
@@ -59,6 +62,33 @@ const Transitions: React.FC = () => {
   );
 };
 
+/** Voiceover laid onto the timeline in pieces (config.VOICEOVER_SEGMENTS); only silences are removed. */
+const Voiceover: React.FC = () => {
+  if (!VOICEOVER_SEGMENTS) return <Audio src={src(FILES.voiceover)} volume={VOICEOVER_VOLUME} />;
+  return (
+    <>
+      {VOICEOVER_SEGMENTS.map((seg, i) => {
+        const dur = Math.round((seg.srcTo - seg.srcFrom) * FPS);
+        return (
+          <Sequence key={i} name={`voiceover ${i + 1}`} from={Math.round(seg.at * FPS)} durationInFrames={dur}>
+            <Audio
+              src={src(FILES.voiceover)}
+              trimBefore={Math.round(seg.srcFrom * FPS)}
+              volume={(f) =>
+                VOICEOVER_VOLUME *
+                interpolate(f, [0, VOICEOVER_FADE, dur - VOICEOVER_FADE, dur], [0, 1, 1, 0], {
+                  extrapolateLeft: "clamp",
+                  extrapolateRight: "clamp",
+                })
+              }
+            />
+          </Sequence>
+        );
+      })}
+    </>
+  );
+};
+
 export const Pitch: React.FC = () => (
   <AbsoluteFill style={{ background: COLORS.navy }}>
     {SCENE_ORDER.map((k) => {
@@ -71,7 +101,7 @@ export const Pitch: React.FC = () => (
     })}
     <Transitions />
     <Captions />
-    {hasAsset(FILES.voiceover) ? <Audio src={src(FILES.voiceover)} volume={VOICEOVER_VOLUME} /> : null}
+    {hasAsset(FILES.voiceover) ? <Voiceover /> : null}
     {hasAsset(FILES.music) ? (
       <Audio
         src={src(FILES.music)}

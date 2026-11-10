@@ -45,7 +45,9 @@ export const ASSETS: Record<string, AssetInfo> = {
     "exists": false
   },
   "voiceover.mp3": {
-    "exists": false
+    "exists": true,
+    "fps": 0,
+    "durationSec": 188.184
   }
 };
 export const VALIDATION_ROWS: ValidationRow[] | null = null;

@@ -22,7 +22,7 @@ export const buildCues = (): Cue[] => {
     if (explicit) {
       items.forEach((it, k) => {
         const from = it.at as number;
-        const to = k + 1 < items.length ? (items[k + 1].at as number) : range.to - CAPTION_TAIL;
+        const to = it.to ?? (k + 1 < items.length ? (items[k + 1].at as number) : range.to - CAPTION_TAIL);
         cues.push({ scene, from, to, text: it.text });
       });
       continue;

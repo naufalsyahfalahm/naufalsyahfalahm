@@ -3,4 +3,4 @@
 set -euo pipefail
 out="$1"; shift
 mkdir -p "$out"
-printf '%s\n' "$@" | xargs -P 3 -I{} sh -c "npx remotion still ErgoAIDeskPitch '$out/frame-{}.png' --frame={} >/dev/null 2>&1 && echo rendered {} || echo FAILED {}"
+printf '%s\n' "$@" | xargs -P 2 -I{} sh -c "npx remotion still ErgoAIDeskPitch '$out/frame-{}.png' --frame={} >/dev/null 2>&1 && echo rendered {} || echo FAILED {}"

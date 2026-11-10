@@ -125,7 +125,7 @@ for (const c of cues) {
   if (cps > 21) warn(`caption ${c.from}-${c.to} reads at ${cps.toFixed(1)} chars/s: "${c.text.slice(0, 40)}..."`);
   if (c.to <= c.from) fail(`caption cue ${c.from}-${c.to} has no duration`);
 }
-ok(`${cues.length} caption cues, fastest ${worst.toFixed(1)} chars/s (cues are estimates until timed to the voiceover)`);
+ok(`${cues.length} caption cues, fastest ${worst.toFixed(1)} chars/s (timed to the voiceover where at is set)`);
 
 // ---- narration length vs scene length (150 wpm is a normal presentation pace)
 for (const k of C.SCENE_ORDER) {

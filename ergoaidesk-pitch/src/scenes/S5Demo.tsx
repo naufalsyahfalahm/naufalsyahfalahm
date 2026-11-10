@@ -25,9 +25,16 @@ const OVERLAP = 10; // previous part stays underneath while the next dissolves i
 const SCREEN_H = 900;
 const SCREEN_W = Math.round((SCREEN_H * 780) / 1688); // matches the 780x1688 recordings
 
-const PhoneSlot: React.FC<{ screenW: number; screenH: number; children: React.ReactNode }> = ({ screenW, screenH, children }) => {
+const PhoneSlot: React.FC<{
+  screenW: number;
+  screenH: number;
+  zoomTo?: number; // slow push-in over the part (used while a clip holds its last frame)
+  dur?: number;
+  children: React.ReactNode;
+}> = ({ screenW, screenH, zoomTo = 1, dur = 1, children }) => {
   const frame = useCurrentFrame();
   const k = prog(frame, 0, OVERLAP);
+  const zoom = zoomTo === 1 ? 1 : 1 + (zoomTo - 1) * prog(frame, OVERLAP, Math.max(dur, OVERLAP + 1), easeInOut);
   return (
     <div
       style={{
@@ -35,7 +42,7 @@ const PhoneSlot: React.FC<{ screenW: number; screenH: number; children: React.Re
         right: SAFE,
         top: (1080 - (screenH + 34)) / 2,
         opacity: k,
-        transform: `translateX(${(1 - k) * 36}px)`,
+        transform: `translateX(${(1 - k) * 36}px) scale(${zoom})`,
       }}
     >
       <PhoneFrame screenW={screenW} screenH={screenH}>
@@ -69,7 +76,8 @@ const RecordingPart: React.FC<{
   sub: string;
   extra?: string;
   dur: number;
-}> = ({ spec, title, sub, extra, dur }) => (
+  zoomTo?: number;
+}> = ({ spec, title, sub, extra, dur, zoomTo }) => (
   <AbsoluteFill>
     <Column dur={dur}>
       <T size={72} font="heading" maxLines={1}>
@@ -85,7 +93,7 @@ const RecordingPart: React.FC<{
       </T>
       {recordingsAreMockups && hasAsset(spec.file) ? <MockupChip /> : null}
     </Column>
-    <PhoneSlot screenW={SCREEN_W} screenH={SCREEN_H}>
+    <PhoneSlot screenW={SCREEN_W} screenH={SCREEN_H} zoomTo={zoomTo} dur={dur}>
       <RecordingSlot spec={spec} width={SCREEN_W} height={SCREEN_H} />
     </PhoneSlot>
   </AbsoluteFill>
@@ -156,7 +164,7 @@ const buildParts = (): Part[] => {
     key: "dashboard",
     ...DEMO_PARTS.dashboard,
     render: (dur) => (
-      <RecordingPart spec={RECORDINGS.dashboard} title={TEXT.demo.dashboardTitle} sub={TEXT.demo.dashboardSub} dur={dur} />
+      <RecordingPart spec={RECORDINGS.dashboard} title={TEXT.demo.dashboardTitle} sub={TEXT.demo.dashboardSub} dur={dur} zoomTo={1.06} />
     ),
   };
   const pose = (range: { from: number; to: number }, rate: number): Part => ({

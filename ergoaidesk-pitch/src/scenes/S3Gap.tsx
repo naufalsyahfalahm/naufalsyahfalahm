@@ -20,13 +20,16 @@ const Observer: React.FC = () => (
 
 export const SceneGap: React.FC = () => {
   const frame = useCurrentFrame();
+  // timed to the voiceover (scene-local): sentence 1 0-200, "manual observation" 204-292,
+  // "psychological conditions ... self-report" 306-430, "not integrated" 449, "interaction" 515
   const inL = prog(frame, 0, 28);
   const inR = prog(frame, 0, 28);
-  const fill = prog(frame, 24, 190, easeInOut);
-  const divider = prog(frame, 170, 230);
-  const q = prog(frame, 270, 310);
-  const headA = fade(frame, 14, 14, 232, 12);
-  const headB = fade(frame, 244, 16);
+  const fillL = prog(frame, 60, 300, easeInOut);
+  const fillR = prog(frame, 150, 440, easeInOut);
+  const divider = prog(frame, 440, 520);
+  const q = prog(frame, 530, 575);
+  const headA = fade(frame, 14, 14, 505, 12);
+  const headB = fade(frame, 515, 16);
   const x0 = 96;
   const x1 = 1920 - 96 - PANEL.w;
   return (
@@ -65,7 +68,7 @@ export const SceneGap: React.FC = () => {
           <Observer />
         </div>
         <div style={{ position: "absolute", left: 300, top: 14, transform: "scale(0.88)", transformOrigin: "0 0" }}>
-          <RulaClipboard fill={fill} t={frame} />
+          <RulaClipboard fill={fillL} t={frame} />
         </div>
       </div>
       <div style={{ position: "absolute", left: x0, top: PANEL.top + PANEL.h + 10, width: PANEL.w, opacity: inL }}>
@@ -90,7 +93,7 @@ export const SceneGap: React.FC = () => {
         }}
       >
         <div style={{ position: "absolute", left: 170, top: 14, transform: "scale(0.88)", transformOrigin: "0 0" }}>
-          <PaperQuestionnaire fill={fill} />
+          <PaperQuestionnaire fill={fillR} />
         </div>
       </div>
       <div style={{ position: "absolute", left: x1, top: PANEL.top + PANEL.h + 10, width: PANEL.w, opacity: inR }}>

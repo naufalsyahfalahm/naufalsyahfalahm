@@ -9,6 +9,9 @@ import { T } from "../components/Text";
 import { hasAsset } from "../lib/assets";
 import { easeInOut, fade, prog, useSpring } from "../lib/motion";
 
+// Reveal frames are scene-local and follow the voiceover: "We developed ERGO-AI DESK" 57, "YOLOv11-based
+// computer vision" 258, "self-report questionnaires" 422, "perceived psychological strain" 620,
+// "By integrating both assessments" 720, "targeted workplace improvement recommendations" ~880.
 const NODE_W = 560;
 const COL_A = 0;
 const COL_B = 664;
@@ -28,23 +31,23 @@ type NodeDef = {
 };
 
 const NODES: NodeDef[] = [
-  { id: "camera", x: COL_A, y: 0, h: 96, lines: [F.camera], fill: COLORS.teal, color: COLORS.white, at: 300 },
-  { id: "pose", x: COL_A, y: 140, h: 136, lines: F.pose, fill: COLORS.teal, color: COLORS.white, at: 350 },
-  { id: "physical", x: COL_A, y: 320, h: 96, lines: [F.physical], fill: COLORS.teal, color: COLORS.white, at: 440 },
-  { id: "questionnaire", x: COL_B, y: 160, h: 96, lines: [F.questionnaire], fill: COLORS.lilac, color: COLORS.navy, at: 570 },
-  { id: "psych", x: COL_B, y: 320, h: 96, lines: [F.psych], fill: COLORS.lilac, color: COLORS.navy, at: 650 },
-  { id: "merge", x: COL_A, y: 464, h: 136, lines: F.merge, fill: COLORS.white, color: COLORS.navy, at: 900 },
-  { id: "recs", x: COL_B, y: 464, h: 136, lines: F.recs, fill: COLORS.grey, color: COLORS.navy, at: 1010 },
+  { id: "camera", x: COL_A, y: 0, h: 96, lines: [F.camera], fill: COLORS.teal, color: COLORS.white, at: 285 },
+  { id: "pose", x: COL_A, y: 140, h: 136, lines: F.pose, fill: COLORS.teal, color: COLORS.white, at: 325 },
+  { id: "physical", x: COL_A, y: 320, h: 96, lines: [F.physical], fill: COLORS.teal, color: COLORS.white, at: 380 },
+  { id: "questionnaire", x: COL_B, y: 160, h: 96, lines: [F.questionnaire], fill: COLORS.lilac, color: COLORS.navy, at: 440 },
+  { id: "psych", x: COL_B, y: 320, h: 96, lines: [F.psych], fill: COLORS.lilac, color: COLORS.navy, at: 625 },
+  { id: "merge", x: COL_A, y: 464, h: 136, lines: F.merge, fill: COLORS.white, color: COLORS.navy, at: 750 },
+  { id: "recs", x: COL_B, y: 464, h: 136, lines: F.recs, fill: COLORS.grey, color: COLORS.navy, at: 885 },
 ];
 
 type Edge = { d: string; color: string; at: number; head: "teal" | "lilac" | "white" };
 const EDGES: Edge[] = [
-  { d: "M280 100 V136", color: COLORS.teal, at: 325, head: "teal" },
-  { d: "M280 280 V316", color: COLORS.teal, at: 410, head: "teal" },
-  { d: "M944 260 V316", color: COLORS.lilac, at: 615, head: "lilac" },
-  { d: "M280 420 V460", color: COLORS.white, at: 880, head: "white" },
-  { d: "M944 420 V436 Q944 440 940 440 H484 Q480 440 480 444 V460", color: COLORS.white, at: 880, head: "white" },
-  { d: "M564 532 H660", color: COLORS.white, at: 985, head: "white" },
+  { d: "M280 100 V136", color: COLORS.teal, at: 310, head: "teal" },
+  { d: "M280 280 V316", color: COLORS.teal, at: 358, head: "teal" },
+  { d: "M944 260 V316", color: COLORS.lilac, at: 600, head: "lilac" },
+  { d: "M280 420 V460", color: COLORS.white, at: 735, head: "white" },
+  { d: "M944 420 V436 Q944 440 940 440 H484 Q480 440 480 444 V460", color: COLORS.white, at: 735, head: "white" },
+  { d: "M564 532 H660", color: COLORS.white, at: 870, head: "white" },
 ];
 
 const Node: React.FC<NodeDef> = ({ x, y, h, lines, fill, color, at }) => {
@@ -120,8 +123,8 @@ const Flow: React.FC = () => {
 
 const Wordmark: React.FC = () => {
   const frame = useCurrentFrame();
-  const intro = useSpring(0, { damping: 200 });
-  const move = prog(frame, 150, 210, easeInOut);
+  const intro = useSpring(20, { damping: 200 });
+  const move = prog(frame, 230, 290, easeInOut);
   const s = 2.6 - 1.6 * move;
   return (
     <>
@@ -149,7 +152,7 @@ const Wordmark: React.FC = () => {
           left: SAFE,
           right: SAFE,
           top: 640,
-          opacity: fade(frame, 50, 20, 180, 20),
+          opacity: fade(frame, 105, 20, 235, 20),
         }}
       >
         <T size={44} weight={600} color={COLORS.grey} maxLines={1} align="center">
@@ -162,7 +165,7 @@ const Wordmark: React.FC = () => {
 
 const HeaderPhone: React.FC = () => {
   const frame = useCurrentFrame();
-  const k = prog(frame, 700, 770);
+  const k = prog(frame, 540, 610);
   const geo = useScreenGeometry(FILES.screenHeader, 424);
   const present = hasAsset(FILES.screenHeader) && geo;
   const w = present ? geo.w : 424;
@@ -199,7 +202,7 @@ const HeaderPhone: React.FC = () => {
 const BenefitsBeat: React.FC = () => {
   const frame = useCurrentFrame();
   if (!benefits) return null;
-  const o = fade(frame, 1040, 16);
+  const o = fade(frame, 905, 16);
   return (
     <AbsoluteFill style={{ background: COLORS.navy, opacity: o, padding: SAFE, justifyContent: "center", gap: 28 }}>
       {benefits.map((b, i) => (
@@ -216,7 +219,7 @@ const BenefitsBeat: React.FC = () => {
 
 export const SceneSolution: React.FC = () => {
   const frame = useCurrentFrame();
-  const shift = prog(frame, 700, 770, easeInOut);
+  const shift = prog(frame, 540, 610, easeInOut);
   return (
     <AbsoluteFill style={{ background: COLORS.navy }}>
       <Wordmark />

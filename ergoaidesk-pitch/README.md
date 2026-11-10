@@ -80,8 +80,33 @@ Set `consentDocumented: true` once consent is on file, or list `blurRegions` (pe
 - App screens are never upscaled beyond `MAX_UPSCALE` (1.5x) and are drawn with no filters.
 - The decorative world map is a land mask (Natural Earth 110m via `world-atlas`, public domain; `scripts/gen-world-dots.mjs`), one uniform colour and opacity: no regional shading or values.
 
-## Captions
+## Voiceover and captions
 
-Text is the PDF narration, split at clause boundaries, words unchanged. Cues are auto-timed in proportion to character count (scenes 1-4, 6, 7) or set by explicit frames (scene 5).
-**These are estimates, not synced to audio.** Once `voiceover.mp3` exists, run `npm run check:audio` and copy the printed speech frames into `NARRATION[...].at`.
-`npm run check` also warns when a scene's narration cannot be read in its window at 150 wpm.
+`public/voiceover.mp3` (188.2 s; speech runs 0.25-181.0 s) is laid onto the timeline in pieces by `VOICEOVER_SEGMENTS` in `src/config.ts`.
+**Only silences are removed**: no speech is cut, sped up or reordered, and each piece has a 6-frame fade at its edges.
+Set `VOICEOVER_SEGMENTS = null` to play the file unedited from 0 s.
+
+| Piece | In the file | On the video | Why |
+|---|---|---|---|
+| A | 0 - 67.55 s | 0 - 67.55 s | scenes 1-3, unchanged |
+| B | 71.55 - 102.0 s | 69.55 - 100.0 s | scene 4 narration starts 2.0 s earlier (2.0 s of a 3.95 s pause removed) so it ends at 99.6 s, inside its scene |
+| C | 108.3 - 131.0 s | 108.3 - 131.0 s | scene 5, unchanged (8.7 s of silent app screens first) |
+| D | 148.1 - 160.7 s | 141.1 - 153.7 s | scene 6 narration starts 7.0 s earlier (141.4 s) so it lands on the results cards |
+| E | 168.05 - 181.4 s | 161.15 - 174.5 s | scene 7 narration starts 6.9 s earlier; unedited it ends at 181.0 s, 1 s after the video |
+
+**One PDF timing was changed.** The PDF gives the research-gap scene 0:45-1:00. The narrator reads its three sentences in 22.1 s (45.25-67.35 s),
+so the gap|solution boundary is at 68.0 s (frame 2040) instead of 60.0 s. To restore the PDF boundary set `SCENES.gap.to`, `SCENES.solution.from` and the
+`TRANSITIONS` entry back to 1800; the third sentence ("When these assessments are not integrated...") will then be heard 7.4 s into scene 4.
+Scenes 1, 2 and 5-7 keep their PDF windows.
+
+Caption text is the PDF narration, words unchanged, split where the narrator pauses. Every cue has `at` (and the last cue of a scene a `to`) in frames.
+The onsets were measured from the audio: pauses from a 50 ms loudness envelope (noise floor about -44 dB, speech about -24 dB), clause splits inside a
+phrase by forced alignment of the script against the audio, and the wording confirmed with a local speech-recognition pass. Scene animations (glow points, flow nodes,
+divider and "?", demo sub-clips, closing card) are timed to the same onsets.
+
+```bash
+npm run check:audio                              # scene windows vs speech, overruns, caption onsets vs speech
+npm run check:audio -- --timeline some.wav       # same check on audio extracted from a render
+```
+
+If the voiceover is replaced, re-run `check:audio`, update `VOICEOVER_SEGMENTS` and the `at`/`to` values.

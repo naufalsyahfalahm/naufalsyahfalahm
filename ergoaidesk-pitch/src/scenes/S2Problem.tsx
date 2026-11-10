@@ -31,16 +31,18 @@ const Leader: React.FC<{ from: { x: number; y: number }; to: { x: number; y: num
 
 export const SceneProblem: React.FC = () => {
   const frame = useCurrentFrame();
-  const neck = prog(frame, 70, 110);
-  const sh = prog(frame, 160, 200);
-  const low = prog(frame, 250, 290);
-  const stress = prog(frame, 370, 420);
+  // timed to the voiceover (scene-local frames): "Poor working posture," ~10, "prolonged static
+  // activities," ~85, "suboptimal workstation design" ~135, "perceived stress" ~330, "interconnected" ~510
+  const neck = prog(frame, 30, 70);
+  const sh = prog(frame, 85, 125);
+  const low = prog(frame, 135, 175);
+  const stress = prog(frame, 320, 365);
   const pulse = Math.sin(frame * 0.18);
   const ripple = (frame * 0.012) % 1;
   const bodyIn = prog(frame, 0, 30);
-  const pillP = prog(frame, 50, 80);
-  const pillS = prog(frame, 360, 390);
-  const link = prog(frame, 560, 650, easeInOut);
+  const pillP = prog(frame, 14, 44);
+  const pillS = prog(frame, 310, 340);
+  const link = prog(frame, 520, 610, easeInOut);
   return (
     <AbsoluteFill style={{ background: COLORS.navy }}>
       {/* decorative map: uniform colour and opacity, land mask only; carries no data */}
