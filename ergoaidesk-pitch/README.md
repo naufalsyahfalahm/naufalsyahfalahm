@@ -41,7 +41,8 @@ Frame ranges, on-screen text, colours, file paths, team names, caption toggle (`
 | `footage/presenter.mp4` | Scene 7, slow zoom 1.00 to 1.08 | Navy card with label |
 | `data/validation.csv` | Scene 6 charts | Claim cards only |
 | `voiceover.mp3`, `music.mp3` | Audio (music volume 0.12, fade in/out) | Renders silent |
-| `brand/logo.png` | Logo mark | Plain vector mark drawn (not an official logo) |
+| `brand/logo.png` | Product logo mark | Plain vector mark drawn (not an official logo) |
+| `brand/ugm.png`, `british-council.png`, `dsig.png`, `ldtrc.png`, `middlesex.png` | Closing card, in this order (`CLOSING_LOGOS`) | The logo is omitted |
 
 `validation.csv` columns: `system_score, expert_score, physical_score, psychological_score`. With >= 4 complete rows the claim cards shrink
 to a top row and two scatter charts are added (system vs expert with identity line; physical vs psychological).
@@ -124,3 +125,10 @@ npm run check:audio -- --timeline some.wav       # same check on audio extracted
 ```
 
 If the voiceover changes, re-run `build-voiceover.py`, then `check:audio`, and update the `at`/`to` values in `NARRATION`.
+
+## Closing-card logos
+
+Each logo sits on its own plate; a logo is never enlarged beyond its native size and has no filters.
+`ldtrc.png` is the official London Digital Twin Research Centre logo (500x169, from dt.mdx.ac.uk). Its text is white, so it is shown on a dark plate.
+`ugm.png` and `dsig.png` are the HD files supplied by the team. **`british-council.png` (177x51) and `middlesex.png` (104x104) are the low-resolution files supplied
+and should be replaced with the official HD files** (`npm run check` warns). The British Council and Middlesex marks are subject to their owners' brand rules; confirm permission for this use.

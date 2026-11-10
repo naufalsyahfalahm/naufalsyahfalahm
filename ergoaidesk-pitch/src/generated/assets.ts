@@ -2,8 +2,33 @@
 export type AssetInfo = { exists: boolean; width?: number; height?: number; durationSec?: number; fps?: number };
 export type ValidationRow = { system_score: number; expert_score: number; physical_score: number; psychological_score: number };
 export const ASSETS: Record<string, AssetInfo> = {
+  "brand/british-council.png": {
+    "exists": true,
+    "width": 177,
+    "height": 51
+  },
+  "brand/dsig.png": {
+    "exists": true,
+    "width": 932,
+    "height": 339
+  },
+  "brand/ldtrc.png": {
+    "exists": true,
+    "width": 492,
+    "height": 157
+  },
   "brand/logo.png": {
     "exists": false
+  },
+  "brand/middlesex.png": {
+    "exists": true,
+    "width": 104,
+    "height": 104
+  },
+  "brand/ugm.png": {
+    "exists": true,
+    "width": 2000,
+    "height": 570
   },
   "data/validation.csv": {
     "exists": false

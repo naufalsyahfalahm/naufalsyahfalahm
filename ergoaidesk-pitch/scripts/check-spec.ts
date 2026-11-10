@@ -157,9 +157,16 @@ const slots: Array<[string, string]> = [
   ["music", C.FILES.music],
   ["validation.csv (charts)", C.FILES.validationCsv],
   ["logo (vector stand-in drawn)", C.FILES.logo],
+  ...C.CLOSING_LOGOS.map((l): [string, string] => [`closing logo: ${l.name}`, l.file]),
 ];
 console.log("\nSlots:");
 for (const [label, p] of slots) console.log(`  ${ASSETS[p]?.exists ? "supplied   " : "MISSING    "} ${label}  (public/${p})`);
+for (const l of C.CLOSING_LOGOS) {
+  const a = ASSETS[l.file];
+  if (a?.exists && a.width && a.height && Math.max(a.width, a.height) < 400) {
+    warn(`logo ${l.name}: only ${a.width}x${a.height}px${l.hd ? "" : " (supplied low-resolution file)"}; drawn at most at native size, replace with the official HD file`);
+  }
+}
 if (C.TEAM_NAMES.some((n) => n.startsWith("["))) console.log("  MISSING     team names (config.TEAM_NAMES)");
 if (!existsSync("reference/Skenario_Lomba_OUM.pdf")) warn("reference/Skenario_Lomba_OUM.pdf not found");
 

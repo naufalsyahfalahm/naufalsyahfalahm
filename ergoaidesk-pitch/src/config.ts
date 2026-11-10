@@ -114,6 +114,11 @@ export const FILES = {
   screenUpload: "screens/app-upload-screen.png",
   screenHeader: "screens/app-home-header-crop.png",
   logo: "brand/logo.png", // optional; a simple vector mark is drawn when absent
+  logoUgm: "brand/ugm.png",
+  logoBritishCouncil: "brand/british-council.png",
+  logoDsig: "brand/dsig.png",
+  logoLdtrc: "brand/ldtrc.png",
+  logoMiddlesex: "brand/middlesex.png",
   validationCsv: "data/validation.csv",
   voiceover: "voiceover.mp3",
   music: "music.mp3",
@@ -240,6 +245,26 @@ export const TEAM_NAMES: string[] = ["[TEAM NAMES]"];
 export const AFFILIATION = "Universitas Gadjah Mada";
 /** Presenter footage plays until this frame (scene-local); then the logo card. */
 export const CLOSING_CARD_AT = 270; // tagline (+34 frames) lands on "Smarter assessment" at 170.1 s
+
+/**
+ * Partner/affiliation logos on the closing card, left to right. Each sits on its own plate.
+ * plate "white": logo drawn for light backgrounds. plate "navy": reversed (white-text) logo.
+ * A logo is never enlarged beyond its native pixel size (so a low-resolution file stays sharp but small).
+ * hd: false marks a supplied low-resolution file that should be replaced by the official HD file.
+ */
+export const CLOSING_LOGOS: ReadonlyArray<{
+  file: string;
+  name: string;
+  plate: "white" | "navy";
+  maxH: number;
+  hd: boolean;
+}> = [
+  { file: FILES.logoUgm, name: "Universitas Gadjah Mada", plate: "white", maxH: 108, hd: true },
+  { file: FILES.logoBritishCouncil, name: "British Council", plate: "white", maxH: 108, hd: false },
+  { file: FILES.logoDsig, name: "Digital Safety Intelligence Group", plate: "white", maxH: 116, hd: true },
+  { file: FILES.logoLdtrc, name: "London Digital Twin Research Centre", plate: "navy", maxH: 108, hd: true },
+  { file: FILES.logoMiddlesex, name: "Middlesex University", plate: "white", maxH: 116, hd: false },
+];
 
 // ---------------------------------------------------------------- privacy
 /**
