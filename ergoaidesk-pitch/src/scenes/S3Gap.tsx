@@ -20,16 +20,16 @@ const Observer: React.FC = () => (
 
 export const SceneGap: React.FC = () => {
   const frame = useCurrentFrame();
-  // timed to the voiceover (scene-local): sentence 1 0-200, "manual observation" 204-292,
-  // "psychological conditions ... self-report" 306-430, "not integrated" 449, "interaction" 515
+  // timed to the voiceover (scene-local): sentence 1 0-246, "manual observation" 246-333,
+  // "psychological conditions ... self-report" 333-465, "not integrated" 462, "interaction" 556
   const inL = prog(frame, 0, 28);
   const inR = prog(frame, 0, 28);
-  const fillL = prog(frame, 60, 300, easeInOut);
-  const fillR = prog(frame, 150, 440, easeInOut);
-  const divider = prog(frame, 440, 520);
-  const q = prog(frame, 530, 575);
-  const headA = fade(frame, 14, 14, 505, 12);
-  const headB = fade(frame, 515, 16);
+  const fillL = prog(frame, 60, 330, easeInOut);
+  const fillR = prog(frame, 150, 470, easeInOut);
+  const divider = prog(frame, 470, 545);
+  const q = prog(frame, 560, 605);
+  const headA = fade(frame, 14, 14, 545, 12);
+  const headB = fade(frame, 556, 16);
   const x0 = 96;
   const x1 = 1920 - 96 - PANEL.w;
   return (

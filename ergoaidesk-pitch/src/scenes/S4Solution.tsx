@@ -36,8 +36,8 @@ const NODES: NodeDef[] = [
   { id: "physical", x: COL_A, y: 320, h: 96, lines: [F.physical], fill: COLORS.teal, color: COLORS.white, at: 380 },
   { id: "questionnaire", x: COL_B, y: 160, h: 96, lines: [F.questionnaire], fill: COLORS.lilac, color: COLORS.navy, at: 440 },
   { id: "psych", x: COL_B, y: 320, h: 96, lines: [F.psych], fill: COLORS.lilac, color: COLORS.navy, at: 625 },
-  { id: "merge", x: COL_A, y: 464, h: 136, lines: F.merge, fill: COLORS.white, color: COLORS.navy, at: 750 },
-  { id: "recs", x: COL_B, y: 464, h: 136, lines: F.recs, fill: COLORS.grey, color: COLORS.navy, at: 885 },
+  { id: "merge", x: COL_A, y: 464, h: 136, lines: F.merge, fill: COLORS.white, color: COLORS.navy, at: 735 },
+  { id: "recs", x: COL_B, y: 464, h: 136, lines: F.recs, fill: COLORS.grey, color: COLORS.navy, at: 865 },
 ];
 
 type Edge = { d: string; color: string; at: number; head: "teal" | "lilac" | "white" };
@@ -45,9 +45,9 @@ const EDGES: Edge[] = [
   { d: "M280 100 V136", color: COLORS.teal, at: 310, head: "teal" },
   { d: "M280 280 V316", color: COLORS.teal, at: 358, head: "teal" },
   { d: "M944 260 V316", color: COLORS.lilac, at: 600, head: "lilac" },
-  { d: "M280 420 V460", color: COLORS.white, at: 735, head: "white" },
-  { d: "M944 420 V436 Q944 440 940 440 H484 Q480 440 480 444 V460", color: COLORS.white, at: 735, head: "white" },
-  { d: "M564 532 H660", color: COLORS.white, at: 870, head: "white" },
+  { d: "M280 420 V460", color: COLORS.white, at: 720, head: "white" },
+  { d: "M944 420 V436 Q944 440 940 440 H484 Q480 440 480 444 V460", color: COLORS.white, at: 720, head: "white" },
+  { d: "M564 532 H660", color: COLORS.white, at: 850, head: "white" },
 ];
 
 const Node: React.FC<NodeDef> = ({ x, y, h, lines, fill, color, at }) => {

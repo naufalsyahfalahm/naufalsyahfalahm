@@ -82,31 +82,45 @@ Set `consentDocumented: true` once consent is on file, or list `blurRegions` (pe
 
 ## Voiceover and captions
 
-`public/voiceover.mp3` (188.2 s; speech runs 0.25-181.0 s) is laid onto the timeline in pieces by `VOICEOVER_SEGMENTS` in `src/config.ts`.
-**Only silences are removed**: no speech is cut, sped up or reordered, and each piece has a 6-frame fade at its edges.
-Set `VOICEOVER_SEGMENTS = null` to play the file unedited from 0 s.
+`public/voiceover.mp3` is **already laid out on the video timeline** (180.0 s). It is built from the uncut recording
+(`reference/AI_No_Cut_Audio.mp3`, 931 s, about 7 takes of the whole script plus outtakes) by
 
-| Piece | In the file | On the video | Why |
+```bash
+python3 scripts/build-voiceover.py     # needs numpy + ffmpeg; the raw file is not committed (22 MB), copy it to reference/
+```
+
+using `reference/voiceover-selection.json`, which lists, for each of the 18 sentences, the take used, its start/end in the raw file,
+and the scores of every candidate take. `reference/voiceover-layout.json` records where each sentence landed.
+Only silences are changed: pauses inside a sentence longer than 0.4 s are shortened to 0.4 s, sentences are placed at fixed onsets with 0.5 s between them, and each
+clip is level-matched (speech RMS -18 dB) and limited. No speech is cut, sped up or reordered.
+
+**How the takes were chosen.** Every sentence of every take was cut by forced alignment against the script, transcribed with two local Whisper models
+(`base.en`, `small.en`), and scored by word error rate against the script, speaking rate, the longest pause inside the sentence, and clipping.
+A take replaced the one used in the first voiceover only when it was at least as good in both models and clearly better.
+This is a proxy, not listening: audition the changed sentences (table below) before the final export.
+
+| Sentence | First voiceover | Now | Word error rate base / small |
 |---|---|---|---|
-| A | 0 - 67.55 s | 0 - 67.55 s | scenes 1-3, unchanged |
-| B | 71.55 - 102.0 s | 69.55 - 100.0 s | scene 4 narration starts 2.0 s earlier (2.0 s of a 3.95 s pause removed) so it ends at 99.6 s, inside its scene |
-| C | 108.3 - 131.0 s | 108.3 - 131.0 s | scene 5, unchanged (8.7 s of silent app screens first) |
-| D | 148.1 - 160.7 s | 141.1 - 153.7 s | scene 6 narration starts 7.0 s earlier (141.4 s) so it lands on the results cards |
-| E | 168.05 - 181.4 s | 161.15 - 174.5 s | scene 7 narration starts 6.9 s earlier; unedited it ends at 181.0 s, 1 s after the video |
+| Scene 1, "How do we know..." | r337 | r286 | 0.18 / 0.00 -> 0.00 / 0.00 |
+| Scene 2, "At the same time, psychological factors..." | r358 | r606 | 0.19 / 0.12 -> 0.06 / 0.00 ("perceived stress" was heard as "precip stress") |
+| Scene 3, "Conventional ergonomic assessments..." | r98 | r640 | 0.64 / 0.36 -> 0.00 / 0.27 |
+| Scene 3, "Physical assessments may rely on manual observation..." | r98 | r393 | 0.19 / 0.12 -> 0.06 / 0.06 |
+| Scene 3, "When these assessments are not integrated..." | r98 | r640 | tied at 0.00 (small); 0.9 s shorter, which keeps scene 3's narration before 68.0 s |
 
-**One PDF timing was changed.** The PDF gives the research-gap scene 0:45-1:00. The narrator reads its three sentences in 22.1 s (45.25-67.35 s),
+The other 13 sentences keep the take used in the first voiceover; no candidate beat them in both models.
+**Weakest sentence: scene 5, "Users capture their working posture using a camera, while YOLOv11 analyzes body keypoints and ergonomic indicators."**
+The file has two takes of it and neither is clean (one reads "captured ... analyzed", past tense; the other garbles "keypoints" and "ergonomic indicators"). Re-record this line.
+
+**One PDF timing was changed.** The PDF gives the research-gap scene 0:45-1:00. The narrator reads its three sentences in about 22.5 s (45.25-67.8 s),
 so the gap|solution boundary is at 68.0 s (frame 2040) instead of 60.0 s. To restore the PDF boundary set `SCENES.gap.to`, `SCENES.solution.from` and the
-`TRANSITIONS` entry back to 1800; the third sentence ("When these assessments are not integrated...") will then be heard 7.4 s into scene 4.
-Scenes 1, 2 and 5-7 keep their PDF windows.
+`TRANSITIONS` entry back to 1800; the third sentence will then be heard 7.8 s into scene 4. Scenes 1, 2 and 5-7 keep their PDF windows.
 
-Caption text is the PDF narration, words unchanged, split where the narrator pauses. Every cue has `at` (and the last cue of a scene a `to`) in frames.
-The onsets were measured from the audio: pauses from a 50 ms loudness envelope (noise floor about -44 dB, speech about -24 dB), clause splits inside a
-phrase by forced alignment of the script against the audio, and the wording confirmed with a local speech-recognition pass. Scene animations (glow points, flow nodes,
-divider and "?", demo sub-clips, closing card) are timed to the same onsets.
+Captions are the PDF narration, words unchanged, split where the narrator pauses; every cue has `at` (and the last cue of a scene `to`) in frames.
+Scene animations (glow points, flow nodes, divider and "?", demo sub-clips, closing card) are timed to the same onsets.
 
 ```bash
 npm run check:audio                              # scene windows vs speech, overruns, caption onsets vs speech
 npm run check:audio -- --timeline some.wav       # same check on audio extracted from a render
 ```
 
-If the voiceover is replaced, re-run `check:audio`, update `VOICEOVER_SEGMENTS` and the `at`/`to` values.
+If the voiceover changes, re-run `build-voiceover.py`, then `check:audio`, and update the `at`/`to` values in `NARRATION`.

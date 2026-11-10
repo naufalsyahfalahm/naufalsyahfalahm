@@ -84,10 +84,10 @@ export const SCENE_ORDER: SceneKey[] = [
  */
 export const DEMO_PARTS = {
   photos: { from: 3000, to: 3260 }, // "photos" mode only
-  pose: { from: 3260, to: 3510 }, // "photos" mode
-  poseVideoMode: { from: 3000, to: 3510 }, // "video" mode
-  questionnaire: { from: 3510, to: 3693 },
-  dashboard: { from: 3693, to: 4200 },
+  pose: { from: 3260, to: 3515 }, // "photos" mode
+  poseVideoMode: { from: 3000, to: 3515 }, // "video" mode
+  questionnaire: { from: 3515, to: 3700 },
+  dashboard: { from: 3700, to: 4200 },
 } as const satisfies Record<string, Range>;
 
 /** "photos": 3000-3260 shows the app upload screen first. "video": pose recording runs 3000-3750. */
@@ -284,62 +284,62 @@ export const CAPTION_TAIL = 12;
 export const NARRATION: Record<SceneKey, ReadonlyArray<{ text: string; at?: number; to?: number }>> = {
   hook: [
     { text: "How do we know whether our working environment is truly ergonomic?", at: 8 },
-    { text: "Office workers spend hours in front of computers,", at: 131 },
-    { text: "often maintaining static postures that may lead to musculoskeletal discomfort", at: 231 },
-    { text: "and psychological strain.", at: 359 },
-    { text: "Yet, ergonomic risks are not always visible at first glance.", at: 422, to: 545 },
+    { text: "Office workers spend hours in front of computers,", at: 122 },
+    { text: "often maintaining static postures that may lead to musculoskeletal discomfort", at: 218 },
+    { text: "and psychological strain.", at: 344 },
+    { text: "Yet, ergonomic risks are not always visible at first glance.", at: 406, to: 532 },
   ],
   problem: [
     { text: "Poor working posture, prolonged static activities, and suboptimal workstation design", at: 608 },
-    { text: "can contribute to physical ergonomic risks.", at: 771 },
-    { text: "At the same time, psychological factors, including perceived stress,", at: 869 },
-    { text: "may further influence workers’ overall well-being.", at: 998 },
-    { text: "These interconnected dimensions highlight the need for a more comprehensive approach", at: 1109 },
-    { text: "to ergonomic risk assessment.", at: 1260, to: 1318 },
+    { text: "can contribute to physical ergonomic risks.", at: 770 },
+    { text: "At the same time, psychological factors, including perceived stress,", at: 862 },
+    { text: "may further influence workers’ overall well-being.", at: 988 },
+    { text: "These interconnected dimensions highlight the need for a more comprehensive approach", at: 1099 },
+    { text: "to ergonomic risk assessment.", at: 1249, to: 1318 },
   ],
   gap: [
     {
       text: "Conventional ergonomic assessments often evaluate physical posture and psychological conditions separately.", at: 1358,
     },
-    { text: "Physical assessments may rely on manual observation,", at: 1554 },
-    { text: "while psychological conditions are measured through self-report questionnaires.", at: 1656 },
-    { text: "When these assessments are not integrated,", at: 1799 },
-    { text: "the interaction between physical and psychological risks", at: 1865 },
-    { text: "may be overlooked.", at: 1989, to: 2035 },
+    { text: "Physical assessments may rely on manual observation,", at: 1566 },
+    { text: "while psychological conditions are measured through self-report questionnaires.", at: 1665 },
+    { text: "When these assessments are not integrated,", at: 1821 },
+    { text: "the interaction between physical and psychological risks", at: 1906 },
+    { text: "may be overlooked.", at: 2005, to: 2036 },
   ],
   solution: [
-    { text: "We developed ERGO-AI DESK,", at: 2097 },
-    { text: "an AI-assisted multidomain ergonomic assessment system for computer users.", at: 2153 },
+    { text: "We developed ERGO-AI DESK,", at: 2094 },
+    { text: "an AI-assisted multidomain ergonomic assessment system for computer users.", at: 2150 },
     {
       text: "It combines YOLOv11-based computer vision to assess body posture and workstation characteristics", at: 2298,
     },
-    { text: "with brief self-report questionnaires covering ergonomic and psychosocial factors,", at: 2462 },
-    { text: "including lighting, break habits, and perceived psychological strain.", at: 2606 },
-    { text: "By integrating both assessments,", at: 2760 },
+    { text: "with brief self-report questionnaires covering ergonomic and psychosocial factors,", at: 2460 },
+    { text: "including lighting, break habits, and perceived psychological strain.", at: 2603 },
+    { text: "By integrating both assessments,", at: 2746 },
     {
-      text: "the system generates ergonomic risk scores and targeted workplace improvement recommendations.", at: 2822, to: 2996,
+      text: "the system generates ergonomic risk scores and targeted workplace improvement recommendations.", at: 2800, to: 2996,
     },
   ],
   demo: [
-    { text: "Users capture their working posture using a camera,", at: 3260 },
-    { text: "while YOLOv11 analyzes body keypoints and ergonomic indicators.", at: 3356 },
-    { text: "They then complete a brief questionnaire on workstation conditions,", at: 3510 },
-    { text: "work habits, and psychological strain.", at: 3614 },
-    { text: "Both results are integrated into a dashboard", at: 3693 },
-    { text: "displaying ergonomic risk scores and targeted improvement recommendations.", at: 3789, to: 3929 },
+    { text: "Users capture their working posture using a camera,", at: 3262 },
+    { text: "while YOLOv11 analyzes body keypoints and ergonomic indicators.", at: 3366 },
+    { text: "They then complete a brief questionnaire on workstation conditions,", at: 3516 },
+    { text: "work habits, and psychological strain.", at: 3619 },
+    { text: "Both results are integrated into a dashboard", at: 3702 },
+    { text: "displaying ergonomic risk scores and targeted improvement recommendations.", at: 3798, to: 3934 },
   ],
   results: [
-    { text: "ERGO-AI DESK aims to provide accessible and comprehensive ergonomic screening,", at: 4242 },
+    { text: "ERGO-AI DESK aims to provide accessible and comprehensive ergonomic screening,", at: 4246 },
     {
-      text: "with ongoing development and expert validation to improve assessment accuracy and support healthier, safer workplaces.", at: 4390, to: 4640,
+      text: "with ongoing development and expert validation to improve assessment accuracy and support healthier, safer workplaces.", at: 4392, to: 4624,
     },
   ],
   closing: [
     {
       text: "ERGO-AI DESK integrates AI-based posture analysis and psychosocial assessment for multidomain ergonomic risk evaluation.", at: 4845,
     },
-    { text: "Smarter assessment, healthier workplaces.", at: 5103 },
-    { text: "Thank you.", at: 5198, to: 5223 },
+    { text: "Smarter assessment, healthier workplaces.", at: 5097 },
+    { text: "Thank you.", at: 5192, to: 5218 },
   ],
 };
 
@@ -349,23 +349,13 @@ export const MUSIC_FADE_IN = 60; // frames
 export const MUSIC_FADE_OUT = 90;
 export const VOICEOVER_VOLUME = 1;
 /**
- * public/voiceover.mp3 (188.2 s, speech 0.25-181.0 s) laid onto the video timeline in pieces.
- * ONLY silences are removed; no speech is cut, sped up or reordered. srcFrom/srcTo are seconds in the
- * file, `at` is seconds on the video. Gaps between pieces are silent.
- *   A  S1-S3 narration, unchanged (0.25-67.35 s)
- *   B  S4 narration moved 2.0 s earlier (cuts 2.0 s of the 3.95 s pause) so it ends at 99.6 s, inside its scene
- *   C  S5 narration unchanged (108.65-130.55 s): 8.7 s of silent app screens, then the demo
- *   D  S6 narration moved 7.0 s earlier (starts 141.4 s) so it lands on the results cards
- *   E  S7 narration moved 6.9 s earlier (starts 161.5 s); the original ends at 181.0 s, 1 s past the video
- * Set to null to play the file unedited from 0 s.
+ * public/voiceover.mp3 is already laid out on the video timeline (180.0 s). It is built by
+ * scripts/build-voiceover.py from the uncut recording (reference/AI_No_Cut_Audio.mp3) and
+ * reference/voiceover-selection.json, which lists the take used for every sentence.
+ * Only silences are shortened; no speech is cut, sped up or reordered.
+ * Set to a list of { srcFrom, srcTo, at } (seconds) to place pieces of a different file instead.
  */
-export const VOICEOVER_SEGMENTS: ReadonlyArray<{ srcFrom: number; srcTo: number; at: number }> | null = [
-  { srcFrom: 0, srcTo: 67.55, at: 0 },
-  { srcFrom: 71.55, srcTo: 102.0, at: 69.55 },
-  { srcFrom: 108.3, srcTo: 131.0, at: 108.3 },
-  { srcFrom: 148.1, srcTo: 160.7, at: 141.1 },
-  { srcFrom: 168.05, srcTo: 181.4, at: 161.15 },
-];
+export const VOICEOVER_SEGMENTS: ReadonlyArray<{ srcFrom: number; srcTo: number; at: number }> | null = null;
 export const VOICEOVER_FADE = 6; // frames, at the edge of every piece (avoids clicks)
 
 // ---------------------------------------------------------------- misc

@@ -1,0 +1,182 @@
+[
+ {
+  "scene": "hook",
+  "unit": 0,
+  "take": "r286",
+  "onset_s": 0.25,
+  "end_s": 3.55,
+  "gain_db": -2.3,
+  "limited": false,
+  "text": "How do we know whether our working environment is truly ergonomic?"
+ },
+ {
+  "scene": "hook",
+  "unit": 1,
+  "take": "r337*",
+  "onset_s": 4.05,
+  "end_s": 12.99,
+  "gain_db": -0.9,
+  "limited": false,
+  "text": "Office workers spend hours in front of computers, often maintaining static postures that may lead to musculoskeletal discomfort and psychological strain."
+ },
+ {
+  "scene": "hook",
+  "unit": 2,
+  "take": "r337*",
+  "onset_s": 13.49,
+  "end_s": 17.35,
+  "gain_db": 0.6,
+  "limited": false,
+  "text": "Yet, ergonomic risks are not always visible at first glance."
+ },
+ {
+  "scene": "problem",
+  "unit": 0,
+  "take": "r358*",
+  "onset_s": 20.25,
+  "end_s": 28.29,
+  "gain_db": -2.1,
+  "limited": false,
+  "text": "Poor working posture, prolonged static activities, and suboptimal workstation design can contribute to physical ergonomic risks."
+ },
+ {
+  "scene": "problem",
+  "unit": 1,
+  "take": "r606",
+  "onset_s": 28.79,
+  "end_s": 36.1,
+  "gain_db": -3.5,
+  "limited": true,
+  "text": "At the same time, psychological factors, including perceived stress, may further influence workers' overall well-being."
+ },
+ {
+  "scene": "problem",
+  "unit": 2,
+  "take": "r358*",
+  "onset_s": 36.6,
+  "end_s": 43.53,
+  "gain_db": -1.0,
+  "limited": false,
+  "text": "These interconnected dimensions highlight the need for a more comprehensive approach to ergonomic risk assessment."
+ },
+ {
+  "scene": "gap",
+  "unit": 0,
+  "take": "r640",
+  "onset_s": 45.25,
+  "end_s": 51.69,
+  "gain_db": -2.9,
+  "limited": true,
+  "text": "Conventional ergonomic assessments often evaluate physical posture and psychological conditions separately."
+ },
+ {
+  "scene": "gap",
+  "unit": 1,
+  "take": "r393",
+  "onset_s": 52.19,
+  "end_s": 59.9,
+  "gain_db": -1.9,
+  "limited": false,
+  "text": "Physical assessments may rely on manual observation, while psychological conditions are measured through self-report questionnaires."
+ },
+ {
+  "scene": "gap",
+  "unit": 2,
+  "take": "r640",
+  "onset_s": 60.4,
+  "end_s": 67.79,
+  "gain_db": -2.8,
+  "limited": true,
+  "text": "When these assessments are not integrated, the interaction between physical and psychological risks may be overlooked."
+ },
+ {
+  "scene": "solution",
+  "unit": 0,
+  "take": "r769*",
+  "onset_s": 69.7,
+  "end_s": 76.1,
+  "gain_db": -3.7,
+  "limited": true,
+  "text": "We developed ERGO-AI DESK, an AI-assisted multidomain ergonomic assessment system for computer users."
+ },
+ {
+  "scene": "solution",
+  "unit": 1,
+  "take": "r769*",
+  "onset_s": 76.6,
+  "end_s": 90.73,
+  "gain_db": -2.4,
+  "limited": true,
+  "text": "It combines YOLOv11-based computer vision to assess body posture and workstation characteristics with brief self-report questionnaires covering ergonomic and psychosocial factors, including lighting, break habits, and perceived psychological strain."
+ },
+ {
+  "scene": "solution",
+  "unit": 2,
+  "take": "r769*",
+  "onset_s": 91.33,
+  "end_s": 99.64,
+  "gain_db": -3.6,
+  "limited": false,
+  "text": "By integrating both assessments, the system generates ergonomic risk scores and targeted workplace improvement recommendations."
+ },
+ {
+  "scene": "demo",
+  "unit": 0,
+  "take": "r810*",
+  "onset_s": 108.65,
+  "end_s": 116.6,
+  "gain_db": -2.7,
+  "limited": true,
+  "text": "Users capture their working posture using a camera, while YOLOv11 analyzes body keypoints and ergonomic indicators."
+ },
+ {
+  "scene": "demo",
+  "unit": 1,
+  "take": "r810*",
+  "onset_s": 117.15,
+  "end_s": 122.86,
+  "gain_db": -3.5,
+  "limited": false,
+  "text": "They then complete a brief questionnaire on workstation conditions, work habits, and psychological strain."
+ },
+ {
+  "scene": "demo",
+  "unit": 2,
+  "take": "r810*",
+  "onset_s": 123.41,
+  "end_s": 130.74,
+  "gain_db": -5.5,
+  "limited": false,
+  "text": "Both results are integrated into a dashboard displaying ergonomic risk scores and targeted improvement recommendations."
+ },
+ {
+  "scene": "results",
+  "unit": 0,
+  "take": "r858*",
+  "onset_s": 141.4,
+  "end_s": 153.74,
+  "gain_db": -5.0,
+  "limited": false,
+  "text": "ERGO-AI DESK aims to provide accessible and comprehensive ergonomic screening, with ongoing development and expert validation to improve assessment accuracy and support healthier, safer workplaces."
+ },
+ {
+  "scene": "closing",
+  "unit": 0,
+  "take": "r908*",
+  "onset_s": 161.5,
+  "end_s": 169.41,
+  "gain_db": -4.3,
+  "limited": false,
+  "text": "ERGO-AI DESK integrates AI-based posture analysis and psychosocial assessment for multidomain ergonomic risk evaluation."
+ },
+ {
+  "scene": "closing",
+  "unit": 1,
+  "take": "r908*",
+  "onset_s": 169.91,
+  "end_s": 173.52,
+  "gain_db": -3.8,
+  "limited": true,
+  "text": "Smarter assessment, healthier workplaces. Thank you."
+ }
+]
