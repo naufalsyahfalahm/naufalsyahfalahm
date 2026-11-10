@@ -371,5 +371,10 @@ export const VOICEOVER_FADE = 6; // frames, at the edge of every piece (avoids c
 // ---------------------------------------------------------------- misc
 /** Labelled placeholders for missing slots. Turn off only for the final render when nothing is missing. */
 export const showPlaceholderLabels = true;
+/**
+ * "Ilustrasi" tag on situation illustrations (scenes 1-3). Turned off at the author's request.
+ * The original brief required it on every illustration; set true to restore it.
+ */
+export const showIllustrationTag = false;
 /** App screens are shown at this scale (clamped to MAX_UPSCALE). */
 export const SCREEN_SCALE = 1.25;
