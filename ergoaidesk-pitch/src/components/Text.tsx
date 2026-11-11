@@ -10,6 +10,8 @@ type Props = {
   color?: string;
   /** Hard limit. The render throws if the text wraps to more lines than this. */
   maxLines?: number;
+  /** Lowest allowed size (default MIN_FONT). Only captions use a lower value (PiP keep-out, at most 10 % smaller). */
+  minSize?: number;
   align?: "left" | "center" | "right";
   lineHeight?: number;
   style?: React.CSSProperties;
@@ -26,12 +28,13 @@ export const T: React.FC<Props> = ({
   weight,
   color = COLORS.white,
   maxLines = 2,
+  minSize = MIN_FONT,
   align = "left",
   lineHeight,
   style,
   children,
 }) => {
-  if (size < MIN_FONT) throw new Error(`Text size ${size}px is below the ${MIN_FONT}px minimum`);
+  if (size < minSize) throw new Error(`Text size ${size}px is below the ${minSize}px minimum`);
   const lh = lineHeight ?? (font === "heading" ? 1.1 : 1.22);
   const ref = useRef<HTMLDivElement>(null);
   const { delayRender, continueRender, cancelRender } = useDelayRender();

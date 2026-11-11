@@ -324,6 +324,8 @@ export const CAPTION_LAYOUT: Record<SceneKey, "full" | "wide" | "left"> = {
 };
 /** PiP keep-out for captions: x range (right PiP) and, in the closing, the narrower band between the two PiPs. */
 export const CAPTION_X = { min: 48, max: 1402, closingMin: 518 } as const;
+/** Captions that do not fit in 2 lines inside the PiP-safe width at 44 px are set 10 % smaller (40 px). Matched by start of text. */
+export const CAPTION_REDUCED = { size: 40, startsWith: ["with ongoing development and expert validation"] } as const;
 /** Closing cues in order: where each sits ("band" = x 518-1402 at the usual height, "above" = above the PiP row). */
 export const CAPTION_CLOSING: ReadonlyArray<{ place: "band" | "above" }> = [{ place: "above" }, { place: "band" }, { place: "band" }];
 /** Frames before/after a scene's first/last cue (only for auto-timed scenes). */

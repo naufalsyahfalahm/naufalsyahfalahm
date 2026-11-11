@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import { useCurrentFrame } from "remotion";
-import { CAPTION_CLOSING, CAPTION_LAYOUT, CAPTION_X, COLORS, HEIGHT, KEEP_OUT, SAFE, SCENES, SCENE_ORDER, captionsEnabled } from "../config";
+import { CAPTION_CLOSING, CAPTION_LAYOUT, CAPTION_REDUCED, CAPTION_X, COLORS, HEIGHT, KEEP_OUT, SAFE, SCENES, SCENE_ORDER, captionsEnabled } from "../config";
 import { buildCues } from "../lib/captions";
 import { fade } from "../lib/motion";
 import { T } from "./Text";
@@ -34,6 +34,7 @@ export const Captions: React.FC = () => {
     left = SAFE;
     width = 1120;
   }
+  const capSize = CAPTION_REDUCED.startsWith.some((t) => cue.text.startsWith(t)) ? CAPTION_REDUCED.size : 44;
   const opacity = fade(frame, cue.from, 8, cue.to, 8);
   return (
     <div
@@ -56,7 +57,7 @@ export const Captions: React.FC = () => {
           boxSizing: "border-box",
         }}
       >
-        <T size={44} weight={600} color={COLORS.white} maxLines={2} align={layout === "left" ? "left" : "center"} lineHeight={1.2} style={{ textWrap: "balance" }}>
+        <T size={capSize} minSize={CAPTION_REDUCED.size} weight={600} color={COLORS.white} maxLines={2} align={layout === "left" ? "left" : "center"} lineHeight={1.2} style={{ textWrap: "balance" }}>
           {cue.text}
         </T>
       </div>
