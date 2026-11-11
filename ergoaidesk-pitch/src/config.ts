@@ -123,6 +123,8 @@ export const FILES = {
   validationCsv: "data/validation.csv",
   voiceover: "voiceover.mp3",
   music: "music.mp3",
+  /** Finished audio (voice made clearer + ducked music), built by scripts/master-audio.py. When present it replaces voiceover, music and closing audio below. */
+  audioMaster: "audio-master.mp3",
   /** Face tracks aligned to the main timeline (public/pip is a symlink to the work folder; not committed). */
   pipA: "pip/face_A_aligned.mp4",
   pipB: "pip/face_B_aligned.mp4",

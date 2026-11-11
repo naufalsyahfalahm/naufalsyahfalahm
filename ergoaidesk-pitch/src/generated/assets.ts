@@ -2,6 +2,11 @@
 export type AssetInfo = { exists: boolean; width?: number; height?: number; durationSec?: number; fps?: number };
 export type ValidationRow = { system_score: number; expert_score: number; physical_score: number; psychological_score: number };
 export const ASSETS: Record<string, AssetInfo> = {
+  "audio-master.mp3": {
+    "exists": true,
+    "fps": 0,
+    "durationSec": 180.024
+  },
   "brand/british-council.png": {
     "exists": true,
     "width": 177,

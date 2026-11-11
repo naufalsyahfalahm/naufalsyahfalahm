@@ -180,8 +180,9 @@ export const Pitch: React.FC = () => (
     <Captions />
     <PipLayer />
     {getInputProps().probe ? <LayoutProbe /> : null}
-    {hasAsset(FILES.voiceover) ? <Voiceover /> : null}
-    {musicEnabled && hasAsset(FILES.music) ? (
+    {hasAsset(FILES.audioMaster) ? <Audio src={src(FILES.audioMaster)} volume={VOICEOVER_VOLUME} /> : null}
+    {!hasAsset(FILES.audioMaster) && hasAsset(FILES.voiceover) ? <Voiceover /> : null}
+    {!hasAsset(FILES.audioMaster) && musicEnabled && hasAsset(FILES.music) ? (
       <Audio
         src={src(FILES.music)}
         loop
