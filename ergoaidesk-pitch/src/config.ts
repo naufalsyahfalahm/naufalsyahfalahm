@@ -126,6 +126,8 @@ export const FILES = {
   /** Face tracks aligned to the main timeline (public/pip is a symlink to the work folder; not committed). */
   pipA: "pip/face_A_aligned.mp4",
   pipB: "pip/face_B_aligned.mp4",
+  /** Closing sentence 1 as a unison of both presenters (work/pip, not committed). Replaces the voiceover in UNISON.from..to. */
+  closingUnison: "pip/closing_unison.wav",
 } as const;
 
 /**
@@ -444,3 +446,6 @@ export const KEEP_OUT = {
 export const PIP_CLOSING = { left: "B", right: "A" } as const;
 /** Ranges (frames) where a PiP is hidden because the scene cannot be re-laid-out around it. Empty = none. */
 export const PIP_HIDE: ReadonlyArray<{ side: "left" | "right"; from: number; to: number }> = [];
+
+/** Window (frames) where the unison audio replaces the voiceover: 161.30-169.70 s, 100 ms (3 frames) crossfades. */
+export const UNISON = { from: 4839, to: 5091, fade: 3 } as const;

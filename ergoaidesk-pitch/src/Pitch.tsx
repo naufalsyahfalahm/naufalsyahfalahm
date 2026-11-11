@@ -21,6 +21,7 @@ import {
   TRANSITIONS,
   VOICEOVER_FADE,
   VOICEOVER_SEGMENTS,
+  UNISON,
   VOICEOVER_VOLUME,
   type SceneKey,
 } from "./config";
@@ -106,8 +107,26 @@ const Transitions: React.FC = () => {
 
 /** Voiceover laid onto the timeline in pieces (config.VOICEOVER_SEGMENTS); only silences are removed. */
 const Voiceover: React.FC = () => {
-  if (!VOICEOVER_SEGMENTS)
-    return <Audio src={src(FILES.voiceover)} volume={VOICEOVER_VOLUME} />;
+  if (!VOICEOVER_SEGMENTS) {
+    const unison = hasAsset(FILES.closingUnison);
+    // the voiceover is ducked (100 ms crossfade) only inside the unison window; elsewhere it is untouched
+    const duck = (f: number) => {
+      if (!unison || f < UNISON.from || f >= UNISON.to) return 1;
+      if (f < UNISON.from + UNISON.fade) return 1 - (f - UNISON.from) / UNISON.fade;
+      if (f < UNISON.to - UNISON.fade) return 0;
+      return (f - (UNISON.to - UNISON.fade)) / UNISON.fade;
+    };
+    return (
+      <>
+        <Audio src={src(FILES.voiceover)} volume={(f) => VOICEOVER_VOLUME * duck(f)} />
+        {unison ? (
+          <Sequence name="closing unison" from={UNISON.from} durationInFrames={UNISON.to - UNISON.from}>
+            <Audio src={src(FILES.closingUnison)} volume={VOICEOVER_VOLUME} />
+          </Sequence>
+        ) : null}
+      </>
+    );
+  }
   return (
     <>
       {VOICEOVER_SEGMENTS.map((seg, i) => {
