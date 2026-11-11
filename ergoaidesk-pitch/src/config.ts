@@ -111,7 +111,8 @@ export const TRANSITIONS: ReadonlyArray<{
 export const FILES = {
   hookFootage: "footage/hook.mp4",
   presenterFootage: "footage/presenter.mp4",
-  screenUpload: "screens/app-upload-screen.png",
+  screenUpload: "screens/app-upload-screen.png", // side view (mockup: lateral capture screen, cropped above its placeholder text)
+  screenUploadTop: "screens/app-upload-screen-top.png", // top view (mockup: superior capture screen)
   screenHeader: "screens/app-home-header-crop.png",
   logo: "brand/logo.png", // optional; a simple vector mark is drawn when absent
   logoUgm: "brand/ugm.png",
@@ -188,7 +189,6 @@ export const TEXT = {
   gapRight: "Questionnaire",
   wordmark: "ERGO-AI DESK",
   wordmarkSub: "AI-assisted multidomain ergonomic assessment",
-  appName: "ErgoAI K3", // name shown on the app-name screen
   flow: {
     camera: "Camera or Photos",
     pose: ["Pose Estimation", "(YOLOv11)"],
@@ -208,7 +208,7 @@ export const TEXT = {
     dashboardTitle: "Results dashboard",
     dashboardSub: "Ergonomic risk scores and targeted recommendations",
   },
-  resultsFooter: "Phase 1 validation; manuscript under submission.",
+  resultsFooter: "Phase 1 validation.",
   chartsLabel: "Computed from supplied data",
   tagline: "Smarter assessment, healthier workplaces.",
   placeholderPrefix: "",
@@ -227,7 +227,7 @@ export const BENEFITS_FOOTNOTE = "Designed functions; outcome data not yet avail
 
 /** Results cards: validation status only. No effectiveness, injury or productivity claims. */
 export const SOURCE_LINE =
-  "Pribadi AP, Kristina H, Ardiyanto, Sukma RM. ACSEL 2025 (manuscript under submission)";
+  "Pribadi AP, Kristina H, Ardiyanto, Sukma RM. ACSEL 2025";
 export const claims: ReadonlyArray<{ value: string; text: string; source: string }> = [
   { value: "2,928", text: "Trained on 2,928 workstation images", source: SOURCE_LINE },
   {
@@ -241,7 +241,7 @@ export const claims: ReadonlyArray<{ value: string; text: string; source: string
 export const FORBIDDEN_WORDS = ["significant", "injuries preventable", "productivity increase"];
 
 // ---------------------------------------------------------------- closing
-export const TEAM_NAMES: string[] = ["[TEAM NAMES]"];
+export const TEAM_NAMES: string[] = ["Qonitya Ardinendradewi", "Zaky Muzhaffar", "Ari Prayogo Pribadi"];
 export const AFFILIATION = "Universitas Gadjah Mada";
 /** Presenter footage plays until this frame (scene-local); then the logo card. */
 export const CLOSING_CARD_AT = 270; // tagline (+34 frames) lands on "Smarter assessment" at 170.1 s

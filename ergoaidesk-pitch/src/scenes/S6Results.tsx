@@ -50,15 +50,15 @@ const CardsOnly: React.FC = () => {
   const frame = useCurrentFrame();
   return (
     <AbsoluteFill style={{ background: COLORS.navy }}>
-      <div style={{ position: "absolute", left: SAFE, top: SAFE, width: W }}>
+      <div style={{ position: "absolute", left: SAFE, top: 170, width: W }}>
         {claims.map((_, i) => (
           <Row key={i} i={i} at={30 + i * 100} />
         ))}
-      </div>
-      <div style={{ position: "absolute", left: SAFE, top: 780, width: W, opacity: fade(frame, 340, 16) }}>
-        <T size={44} weight={600} color={COLORS.grey} maxLines={1}>
-          {TEXT.resultsFooter}
-        </T>
+        <div style={{ marginTop: 28, opacity: fade(frame, 340, 16) }}>
+          <T size={44} weight={600} color={COLORS.grey} maxLines={1}>
+            {TEXT.resultsFooter}
+          </T>
+        </div>
       </div>
     </AbsoluteFill>
   );

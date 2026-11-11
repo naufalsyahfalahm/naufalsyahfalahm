@@ -11,8 +11,9 @@ export const PhoneFrame: React.FC<{
   screenW: number;
   screenH: number;
   open?: boolean;
+  fadeH?: number; // height of the fade-out at the bottom of an open frame
   children: React.ReactNode;
-}> = ({ screenW, screenH, open = false, children }) => (
+}> = ({ screenW, screenH, open = false, fadeH = 90, children }) => (
   <div
     style={{
       position: "relative",
@@ -46,7 +47,7 @@ export const PhoneFrame: React.FC<{
             left: 0,
             right: 0,
             bottom: 0,
-            height: 90,
+            height: fadeH,
             background: `linear-gradient(to bottom, rgba(14,34,51,0), ${COLORS.navy})`,
           }}
         />

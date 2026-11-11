@@ -99,15 +99,31 @@ const RecordingPart: React.FC<{
   </AbsoluteFill>
 );
 
-/** photos mode, first 300 frames: real upload screen in a phone frame, slow vertical pan, two callouts. */
+/**
+ * photos mode, first part: two app screens (side view, then top view) in a phone frame with a slow vertical pan,
+ * and the two callouts. The screens are the mockup capture screens cropped above their placeholder text.
+ */
+const ScreenShot: React.FC<{ file: string; label: string; viewW: number; viewH: number; panFrom: number; panTo: number }> = ({
+  file,
+  label,
+  viewW,
+  viewH,
+  panFrom,
+  panTo,
+}) => {
+  const frame = useCurrentFrame();
+  const geo = useScreenGeometry(file, viewW);
+  if (!hasAsset(file) || !geo) return <Placeholder label={label} style={{ width: viewW, height: viewH }} />;
+  const pan = prog(frame, panFrom, panTo, easeInOut) * Math.max(0, geo.h - viewH);
+  return <ScreenImage file={file} width={geo.w} offsetY={pan} />;
+};
+
 const PhotosPart: React.FC<{ dur: number }> = ({ dur }) => {
   const frame = useCurrentFrame();
-  const VIEW_H = 780;
-  const geo = useScreenGeometry(FILES.screenUpload);
-  const present = hasAsset(FILES.screenUpload) && geo;
-  const viewW = present ? geo.w : SCREEN_W;
-  const viewH = present ? Math.min(VIEW_H, geo.h) : SCREEN_H;
-  const pan = present ? prog(frame, 20, dur - 20, easeInOut) * Math.max(0, geo.h - viewH) : 0;
+  const VIEW_W = 460;
+  const VIEW_H = 560;
+  const SWAP = 140; // scene-local frame where the top-view screen takes over
+  const swap = prog(frame, SWAP, SWAP + 12);
   const call = (at: number) => ({
     opacity: fade(frame, at, 14),
     transform: `translateX(${(1 - prog(frame, at, at + 24)) * -40}px)`,
@@ -119,6 +135,7 @@ const PhotosPart: React.FC<{ dur: number }> = ({ dur }) => {
     padding: "18px 32px",
     marginBottom: 28,
   };
+  const present = hasAsset(FILES.screenUpload) && hasAsset(FILES.screenUploadTop);
   return (
     <AbsoluteFill>
       <div style={{ position: "absolute", left: SAFE, top: 300, width: 1000 }}>
@@ -127,18 +144,18 @@ const PhotosPart: React.FC<{ dur: number }> = ({ dur }) => {
             {TEXT.demo.photoSide}
           </T>
         </div>
-        <div style={{ ...card, ...call(130) }}>
+        <div style={{ ...card, ...call(SWAP + 10) }}>
           <T size={44} weight={600} maxLines={2}>
             {TEXT.demo.photoTop}
           </T>
         </div>
+        {recordingsAreMockups && present ? <MockupChip /> : null}
       </div>
-      <PhoneSlot screenW={viewW} screenH={viewH}>
-        {present ? (
-          <ScreenImage file={FILES.screenUpload} width={viewW} offsetY={pan} />
-        ) : (
-          <Placeholder label="[LAYAR APP: ganti app-upload-screen.png]" style={{ width: viewW, height: viewH }} />
-        )}
+      <PhoneSlot screenW={VIEW_W} screenH={VIEW_H}>
+        <ScreenShot file={FILES.screenUpload} label="[LAYAR APP: ganti app-upload-screen.png]" viewW={VIEW_W} viewH={VIEW_H} panFrom={20} panTo={SWAP + 10} />
+        <div style={{ position: "absolute", inset: 0, opacity: swap }}>
+          <ScreenShot file={FILES.screenUploadTop} label="[LAYAR APP: ganti app-upload-screen-top.png]" viewW={VIEW_W} viewH={VIEW_H} panFrom={SWAP} panTo={dur - 20} />
+        </div>
       </PhoneSlot>
     </AbsoluteFill>
   );

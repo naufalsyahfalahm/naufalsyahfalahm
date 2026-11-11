@@ -1,6 +1,6 @@
 import React from "react";
 import { AbsoluteFill, useCurrentFrame } from "remotion";
-import { BENEFITS_FOOTNOTE, COLORS, FILES, SAFE, TEXT, benefits } from "../config";
+import { BENEFITS_FOOTNOTE, COLORS, FILES, MOCKUP_LABEL, SAFE, TEXT, benefits, recordingsAreMockups } from "../config";
 import { LogoMark } from "../components/Logo";
 import { PhoneFrame } from "../components/PhoneFrame";
 import { Placeholder } from "../components/Placeholder";
@@ -180,17 +180,17 @@ const HeaderPhone: React.FC = () => {
         transform: `translateX(${(1 - k) * 420}px)`,
       }}
     >
-      <PhoneFrame screenW={w} screenH={h} open>
+      <PhoneFrame screenW={w} screenH={h} open fadeH={28}>
         {present ? (
           <ScreenImage file={FILES.screenHeader} width={w} />
         ) : (
           <Placeholder label="[LAYAR APP: ganti app-home-header-crop.png]" style={{ width: w, height: h }} size={44} />
         )}
       </PhoneFrame>
-      {present ? (
+      {present && recordingsAreMockups ? (
         <div style={{ marginTop: 18, width: w + 34 }}>
-          <T size={44} weight={600} color={COLORS.grey} maxLines={1} align="center">
-            {TEXT.appName}
+          <T size={44} weight={600} color={COLORS.grey} maxLines={2} align="center">
+            {MOCKUP_LABEL}
           </T>
         </div>
       ) : null}

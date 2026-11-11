@@ -40,7 +40,9 @@ export const ASSETS: Record<string, AssetInfo> = {
     "exists": false
   },
   "music.mp3": {
-    "exists": false
+    "exists": true,
+    "fps": 0,
+    "durationSec": 180.024
   },
   "recordings/demo-dashboard.mp4": {
     "exists": true,
@@ -64,10 +66,19 @@ export const ASSETS: Record<string, AssetInfo> = {
     "durationSec": 12.6
   },
   "screens/app-home-header-crop.png": {
-    "exists": false
+    "exists": true,
+    "width": 780,
+    "height": 300
+  },
+  "screens/app-upload-screen-top.png": {
+    "exists": true,
+    "width": 780,
+    "height": 1090
   },
   "screens/app-upload-screen.png": {
-    "exists": false
+    "exists": true,
+    "width": 780,
+    "height": 1090
   },
   "voiceover.mp3": {
     "exists": true,
