@@ -1,11 +1,18 @@
 import React from "react";
-import { AbsoluteFill, Audio, Sequence, interpolate, useCurrentFrame } from "remotion";
+import {
+  AbsoluteFill,
+  Audio,
+  Sequence,
+  interpolate,
+  useCurrentFrame,
+} from "remotion";
 import {
   COLORS,
   FILES,
   FPS,
   MUSIC_FADE_IN,
   MUSIC_FADE_OUT,
+  musicEnabled,
   MUSIC_VOLUME,
   SCENES,
   SCENE_ORDER,
@@ -48,15 +55,47 @@ const Transitions: React.FC = () => {
         if (frame < t.at - half || frame > t.at + half) return null;
         const p = (frame - (t.at - half)) / t.frames;
         if (t.type === "wipe") {
-          const x = interpolate(p, [0, 1], [-1920, 1920], { easing: easeInOut });
+          const x = interpolate(p, [0, 1], [-1920, 1920], {
+            easing: easeInOut,
+          });
           return (
-            <div key={t.at} style={{ position: "absolute", top: 0, left: 0, width: 1920, height: 1080, transform: `translateX(${x}px)`, background: COLORS.navy2 }}>
-              <div style={{ position: "absolute", right: 0, top: 0, bottom: 0, width: 14, background: COLORS.grey }} />
+            <div
+              key={t.at}
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: 1920,
+                height: 1080,
+                transform: `translateX(${x}px)`,
+                background: COLORS.navy2,
+              }}
+            >
+              <div
+                style={{
+                  position: "absolute",
+                  right: 0,
+                  top: 0,
+                  bottom: 0,
+                  width: 14,
+                  background: COLORS.grey,
+                }}
+              />
             </div>
           );
         }
         const o = interpolate(p, [0, 0.5, 1], [0, 1, 0]);
-        return <div key={t.at} style={{ position: "absolute", inset: 0, background: COLORS.navy, opacity: o }} />;
+        return (
+          <div
+            key={t.at}
+            style={{
+              position: "absolute",
+              inset: 0,
+              background: COLORS.navy,
+              opacity: o,
+            }}
+          />
+        );
       })}
     </>
   );
@@ -64,22 +103,33 @@ const Transitions: React.FC = () => {
 
 /** Voiceover laid onto the timeline in pieces (config.VOICEOVER_SEGMENTS); only silences are removed. */
 const Voiceover: React.FC = () => {
-  if (!VOICEOVER_SEGMENTS) return <Audio src={src(FILES.voiceover)} volume={VOICEOVER_VOLUME} />;
+  if (!VOICEOVER_SEGMENTS)
+    return <Audio src={src(FILES.voiceover)} volume={VOICEOVER_VOLUME} />;
   return (
     <>
       {VOICEOVER_SEGMENTS.map((seg, i) => {
         const dur = Math.round((seg.srcTo - seg.srcFrom) * FPS);
         return (
-          <Sequence key={i} name={`voiceover ${i + 1}`} from={Math.round(seg.at * FPS)} durationInFrames={dur}>
+          <Sequence
+            key={i}
+            name={`voiceover ${i + 1}`}
+            from={Math.round(seg.at * FPS)}
+            durationInFrames={dur}
+          >
             <Audio
               src={src(FILES.voiceover)}
               trimBefore={Math.round(seg.srcFrom * FPS)}
               volume={(f) =>
                 VOICEOVER_VOLUME *
-                interpolate(f, [0, VOICEOVER_FADE, dur - VOICEOVER_FADE, dur], [0, 1, 1, 0], {
-                  extrapolateLeft: "clamp",
-                  extrapolateRight: "clamp",
-                })
+                interpolate(
+                  f,
+                  [0, VOICEOVER_FADE, dur - VOICEOVER_FADE, dur],
+                  [0, 1, 1, 0],
+                  {
+                    extrapolateLeft: "clamp",
+                    extrapolateRight: "clamp",
+                  },
+                )
               }
             />
           </Sequence>
@@ -94,7 +144,12 @@ export const Pitch: React.FC = () => (
     {SCENE_ORDER.map((k) => {
       const Scene = SCENE_COMPONENTS[k];
       return (
-        <Sequence key={k} name={k} from={SCENES[k].from} durationInFrames={SCENES[k].to - SCENES[k].from}>
+        <Sequence
+          key={k}
+          name={k}
+          from={SCENES[k].from}
+          durationInFrames={SCENES[k].to - SCENES[k].from}
+        >
           <Scene />
         </Sequence>
       );
@@ -102,15 +157,20 @@ export const Pitch: React.FC = () => (
     <Transitions />
     <Captions />
     {hasAsset(FILES.voiceover) ? <Voiceover /> : null}
-    {hasAsset(FILES.music) ? (
+    {musicEnabled && hasAsset(FILES.music) ? (
       <Audio
         src={src(FILES.music)}
         loop
         volume={(f) =>
-          interpolate(f, [0, MUSIC_FADE_IN, TOTAL_FRAMES - MUSIC_FADE_OUT, TOTAL_FRAMES], [0, MUSIC_VOLUME, MUSIC_VOLUME, 0], {
-            extrapolateLeft: "clamp",
-            extrapolateRight: "clamp",
-          })
+          interpolate(
+            f,
+            [0, MUSIC_FADE_IN, TOTAL_FRAMES - MUSIC_FADE_OUT, TOTAL_FRAMES],
+            [0, MUSIC_VOLUME, MUSIC_VOLUME, 0],
+            {
+              extrapolateLeft: "clamp",
+              extrapolateRight: "clamp",
+            },
+          )
         }
       />
     ) : null}

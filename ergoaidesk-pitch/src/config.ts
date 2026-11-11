@@ -389,6 +389,8 @@ export const NARRATION: Record<SceneKey, ReadonlyArray<{ text: string; at?: numb
 };
 
 // ---------------------------------------------------------------- audio
+/** Background music on/off. Off for now at the author's request; public/music.mp3 is kept. */
+export const musicEnabled = false;
 export const MUSIC_VOLUME = 0.12;
 export const MUSIC_FADE_IN = 60; // frames
 export const MUSIC_FADE_OUT = 90;
