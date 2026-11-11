@@ -47,7 +47,7 @@ export const ASSETS: Record<string, AssetInfo> = {
   "pip/closing_unison.wav": {
     "exists": true,
     "fps": 0,
-    "durationSec": 8.4
+    "durationSec": 12.7
   },
   "pip/face_A_aligned.mp4": {
     "exists": true,

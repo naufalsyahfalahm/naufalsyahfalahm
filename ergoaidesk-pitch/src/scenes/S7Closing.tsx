@@ -1,33 +1,82 @@
 import React from "react";
-import { AbsoluteFill, Easing, Img, useCurrentFrame } from "remotion";
+import { AbsoluteFill, Img, Sequence, useCurrentFrame } from "remotion";
 import {
   AFFILIATION,
   CLOSING_CARD_AT,
   CLOSING_LOGOS,
   COLORS,
   MAX_LOGO_UPSCALE,
+  RECORDINGS,
+  RECORDING_CONTENT_BOX,
   TEAM_NAMES,
   TEXT,
 } from "../config";
 import { LogoMark } from "../components/Logo";
-import { FootageSlot } from "../components/Media";
-import { Placeholder } from "../components/Placeholder";
+import { RecordingSlot } from "../components/Media";
+import { PhoneFrame } from "../components/PhoneFrame";
 import { T } from "../components/Text";
 import { assetInfo, hasAsset, src } from "../lib/assets";
 import { easeInOut, prog } from "../lib/motion";
 
-const NavyCard: React.FC = () => (
-  <AbsoluteFill
-    style={{
-      background: COLORS.navy,
-      alignItems: "center",
-      justifyContent: "center",
-    }}
-  >
-    <Placeholder
-      label="[REKAMAN: ganti presenter.mp4]"
-      style={{ border: "none", background: "transparent", color: COLORS.grey }}
-    />
+/**
+ * Conclusion visual (replaces the presenter-footage slot): the three app mockups combined as
+ * posture analysis + psychosocial assessment = risk evaluation. Appears with the narration of sentence 1
+ * (scene-local frames; narration starts at about 45, "posture" at about 118, "psychosocial" at about 165,
+ * "multidomain" at about 220). Everything stays above y = 640 (caption above the PiP row) and left of x = 1426
+ * wherever it reaches y = 771 (PiP keep-out).
+ */
+const CONC = { w: 215, top: 62, labelTop: 575 };
+const CONC_H = Math.round((CONC.w * RECORDING_CONTENT_BOX.h) / RECORDING_CONTENT_BOX.w); // 465
+const ConclusionItem: React.FC<{
+  cx: number;
+  at: number;
+  spec: (typeof RECORDINGS)[keyof typeof RECORDINGS];
+  label: string;
+}> = ({ cx, at, spec, label }) => (
+  <Sequence from={at} layout="none" name={`conclusion ${label}`}>
+    <ConclusionItemInner cx={cx} spec={spec} label={label} />
+  </Sequence>
+);
+const ConclusionItemInner: React.FC<{
+  cx: number;
+  spec: (typeof RECORDINGS)[keyof typeof RECORDINGS];
+  label: string;
+}> = ({ cx, spec, label }) => {
+  const frame = useCurrentFrame();
+  const k = prog(frame, 0, 20, easeInOut);
+  return (
+    <div style={{ opacity: k, transform: `translateY(${(1 - k) * 24}px)` }}>
+      <div style={{ position: "absolute", left: cx - (CONC.w + 28) / 2, top: CONC.top }}>
+        <PhoneFrame screenW={CONC.w} screenH={CONC_H}>
+          <RecordingSlot spec={spec} width={CONC.w} height={CONC_H} />
+        </PhoneFrame>
+      </div>
+      <div style={{ position: "absolute", left: cx - 290, top: CONC.labelTop, width: 580 }}>
+        <T size={44} weight={600} maxLines={1} align="center" style={{ whiteSpace: "nowrap" }}>
+          {label}
+        </T>
+      </div>
+    </div>
+  );
+};
+const Operator: React.FC<{ cx: number; at: number; char: string }> = ({ cx, at, char }) => {
+  const frame = useCurrentFrame();
+  const k = prog(frame, at, at + 14, easeInOut);
+  return (
+    <div style={{ position: "absolute", left: cx - 60, top: CONC.top + CONC_H / 2 - 60, width: 120, opacity: k, transform: `scale(${0.7 + 0.3 * k})` }}>
+      <T size={110} font="heading" maxLines={1} align="center" lineHeight={1} color={COLORS.grey}>
+        {char}
+      </T>
+    </div>
+  );
+};
+const ConclusionMockups: React.FC = () => (
+  <AbsoluteFill style={{ background: COLORS.navy }}>
+    <ConclusionItem cx={372} at={100} spec={RECORDINGS.pose} label="AI posture analysis" />
+    <Operator cx={666} at={140} char="+" />
+    <ConclusionItem cx={960} at={150} spec={RECORDINGS.questionnaire} label="Psychosocial assessment" />
+    <Operator cx={1254} at={200} char="=" />
+    <ConclusionItem cx={1548} at={205} spec={RECORDINGS.dashboard} label="Ergonomic risk evaluation" />
   </AbsoluteFill>
 );
 
@@ -102,7 +151,6 @@ const LogoCell: React.FC<{
 
 export const SceneClosing: React.FC = () => {
   const frame = useCurrentFrame();
-  const zoom = 1 + 0.08 * prog(frame, 0, CLOSING_CARD_AT + 20, Easing.linear);
   const p = prog(frame, CLOSING_CARD_AT, CLOSING_CARD_AT + 22, easeInOut);
   const item = (at: number) => ({
     opacity: prog(frame, at, at + 18),
@@ -112,7 +160,7 @@ export const SceneClosing: React.FC = () => {
   const band = prog(frame, CLOSING_CARD_AT + 100, CLOSING_CARD_AT + 124);
   return (
     <AbsoluteFill style={{ background: COLORS.navy }}>
-      <FootageSlot kind="presenter" scale={zoom} fallback={<NavyCard />} />
+      <ConclusionMockups />
       <AbsoluteFill
         style={{
           background: COLORS.navy,

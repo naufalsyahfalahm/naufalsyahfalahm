@@ -39,7 +39,7 @@ def kf(iv):
 fr=lambda t:round(t*FPS)
 tracks={
  "A":{"file":"pip/face_A_aligned.mp4","right":kf(vis["tya"])+[[fr(CLOSE0),0],[fr(CLOSE0+FADE),1],[fr(END),1]],"left":[]},
- "B":{"file":"pip/face_B_aligned.mp4","right":kf(vis["zaky"]),"left":[[fr(CLOSE0),0],[fr(CLOSE0+FADE),1],[fr(END),1]]},
+ "B":{"file":"pip/face_B_aligned.mp4","right":kf(vis["zaky"]),"left":[[fr(169.57),0],[fr(169.57+FADE),1],[fr(END),1]]},
 }
 # drop keyframes of right-B/A that fall in/after the closing (closing handled explicitly)
 for k in tracks: tracks[k]["right"]=[p for p in tracks[k]["right"] if p[0]<fr(CLOSE0)] + ([[fr(CLOSE0),0],[fr(CLOSE0+FADE),1],[fr(END),1]] if k=="A" else [[fr(CLOSE0),0]])

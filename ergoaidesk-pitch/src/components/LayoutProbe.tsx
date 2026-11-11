@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useCurrentFrame, useDelayRender } from "remotion";
+import { getInputProps, useCurrentFrame, useDelayRender } from "remotion";
 import { KEEP_OUT } from "../config";
 
 /**
@@ -47,15 +47,18 @@ export const LayoutProbe: React.FC = () => {
             if (r.width >= 1900 && r.height >= 1060) continue; // full-bleed background
             const inRight = r.right > KEEP_OUT.right.xMin && r.bottom > KEEP_OUT.right.yMin && r.left < 1920 && r.top < 1080;
             const inLeft = r.left < KEEP_OUT.left.xMax && r.bottom > KEEP_OUT.left.yMin && r.right > 0 && r.top < 1080;
-            if (!inRight && !inLeft) continue;
+            if (!inRight && !inLeft && !getInputProps().probeAll) continue;
             const o = effOpacity(el);
             if (o < 0.05) continue;
             const txt = (el.textContent ?? "").trim().replace(/\s+/g, " ").slice(0, 48);
             const path: string[] = [];
             for (let n: Element | null = el; n && path.length < 4; n = n.parentElement) path.push(n.tagName.toLowerCase() + (n.getAttribute("data-probe") ? `#${n.getAttribute("data-probe")}` : ""));
-            hits.push({ tag: el.tagName.toLowerCase(), txt, path: path.join("<"), l: Math.round(r.left), t: Math.round(r.top), r: Math.round(r.right), b: Math.round(r.bottom), op: +o.toFixed(2), zone: `${inRight ? "R" : ""}${inLeft ? "L" : ""}` });
+            const tn = Array.from(el.childNodes).find((c) => c.nodeType === 3 && (c.textContent ?? "").trim());
+            const rg = tn ? document.createRange() : null;
+            if (rg && tn) rg.selectNodeContents(tn);
+            const tr = rg ? rg.getBoundingClientRect() : null;
+            hits.push({ tr: tr ? [Math.round(tr.left), Math.round(tr.top), Math.round(tr.right), Math.round(tr.bottom)] : null, tag: el.tagName.toLowerCase(), txt, path: path.join("<"), l: Math.round(r.left), t: Math.round(r.top), r: Math.round(r.right), b: Math.round(r.bottom), op: +o.toFixed(2), zone: `${inRight ? "R" : ""}${inLeft ? "L" : ""}` });
           }
-          // eslint-disable-next-line no-console
           console.log("PROBE " + JSON.stringify({ frame, hits }));
           continueRender(handle);
         }),

@@ -11,7 +11,7 @@ const outFile = process.argv[3] ?? "work/probe.json";
 const extra = (process.argv[4] ?? "").split(",").filter(Boolean).map(Number);
 const chromium = process.env.REMOTION_BROWSER_EXECUTABLE ?? "/opt/pw-browsers/chromium";
 const serveUrl = await bundle({ entryPoint: join(process.cwd(), "src/index.ts"), onProgress: () => {}, rspack: true });
-const inputProps = { probe: true, checkpass: true };
+const inputProps = { probe: true, checkpass: true, probeAll: process.env.PROBE_ALL === '1' };
 const browserExecutable = existsSync(chromium) ? chromium : undefined;
 const comp = await selectComposition({ serveUrl, id: "ErgoAIDeskPitch", inputProps, browserExecutable });
 const frames = new Set(extra);
