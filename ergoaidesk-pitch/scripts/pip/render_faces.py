@@ -2,7 +2,7 @@ import json, subprocess, sys
 from pathlib import Path
 FPS=30
 U=Path("/root/.claude/uploads/b229099f-2597-5580-a7ef-9445cebf3b9a")
-SRC={"tya":U/"08af3120-Mbak_Tya.mp4","zaky":U/"9a8b6b07-Zaky.mp4","tya2":U/"51b1f5a9-Mbak_Tya_2.mp4"}
+SRC={"tya":U/"08af3120-Mbak_Tya.mp4","zaky":U/"9a8b6b07-Zaky.mp4","tya2":U/"51b1f5a9-Mbak_Tya_2.mp4","zaky2":U/"e870b598-Zaky_2.mp4"}
 LAB={"tya":"A","zaky":"B"}   # provisional labels (see report)
 P=json.load(open("work/pieces.json"))
 for spk,pieces in P.items():
