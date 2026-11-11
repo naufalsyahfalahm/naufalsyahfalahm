@@ -5,7 +5,6 @@ import {
   DEMO_PARTS,
   FILES,
   ADVANTAGES,
-  BENEFITS_FOOTNOTE,
   MOCKUP_LABEL,
   RECORDINGS,
   SAFE,
@@ -102,15 +101,12 @@ const MockupChip: React.FC = () => (
   </div>
 );
 
-/** An app advantage, always followed by the "designed functions" footnote. */
+/** An app advantage (config.ADVANTAGES). */
 const Advantage: React.FC<{ text: string }> = ({ text }) => (
   <div style={{ marginTop: 40 }}>
     <div style={{ borderLeft: `10px solid ${COLORS.grey}`, paddingLeft: 24 }}>
       <T size={44} weight={600} maxLines={2}>
         {text}
-      </T>
-      <T size={44} color={COLORS.grey} maxLines={2} style={{ marginTop: 6 }}>
-        {BENEFITS_FOOTNOTE}
       </T>
     </div>
     {showMockupLabel ? <MockupChip /> : null}

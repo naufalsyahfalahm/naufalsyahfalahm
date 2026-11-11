@@ -180,7 +180,7 @@ export const recordingsAreMockups = true;
 export const showMockupLabel = false;
 
 /**
- * App advantages shown where the mockup label used to be. Each is shown with BENEFITS_FOOTNOTE.
+ * App advantages shown where the mockup label used to be.
  * app: from the original brief. photos / pose / questionnaire: the app screens' own wording
  * ("Foto hanya digunakan untuk analisis dan tidak dipublikasikan", "Panduan keypoint real-time",
  * "Jawaban individual tidak ditampilkan kepada atasan atau manajemen"). dashboard: from the brief.
@@ -237,11 +237,10 @@ export const questionnaireName = "";
 
 /**
  * Optional benefits text. null = not shown. When set, a closing beat is added to the Solution scene
- * together with the mandatory footnote below.
+ * (the "Designed functions; outcome data not yet available." footnote was removed at the author's request).
  * e.g. ["Instant, objective check", "Specific fixes such as monitor height, distance, seating", "Recheck over time"]
  */
 export const benefits: string[] | null = null;
-export const BENEFITS_FOOTNOTE = "Designed functions; outcome data not yet available.";
 
 /** Results cards: validation status only. No effectiveness, injury or productivity claims. */
 export const SOURCE_LINE =

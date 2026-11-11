@@ -53,7 +53,7 @@ Assumptions: roughly linear association; CI assumes approximately bivariate-norm
 
 `public/MOCKUP-README.txt` states that every screen and recording is a **mockup with simulated data** (keypoints and results illustrative) and asks for the label
 "Mockup antarmuka (data simulasi)". **At the author's request the label is not shown** (`showMockupLabel = false` in `src/config.ts`; set it to `true` to restore it).
-In its place the video shows app advantages (`ADVANTAGES`), each followed by the footnote "Designed functions; outcome data not yet available.":
+In its place the video shows app advantages (`ADVANTAGES`; the brief's footnote "Designed functions; outcome data not yet available." was removed at the author's request):
 "Instant, objective check" and "Recheck over time" (scene 4), and in scene 5 the app screens' own statements about photos, real-time keypoint guidance and answer privacy, plus
 "Specific fixes such as monitor height, distance, seating". The screens and recordings are still simulated; without the label nothing on screen says so.
 
@@ -79,7 +79,7 @@ Set `consentDocumented: true` once consent is on file, or list `blurRegions` (pe
 - Palette checked by `npm run check` (contrast >= 4.5:1 for every text/fill pair; no off-palette hex; red/amber/green not used decoratively; no emoji; no image filters on screens).
   Teal on navy is only 3.2:1, so teal is used for fills and lines only; text on teal is white.
 - Claims state validation status only; forbidden phrases ("significant", effectiveness, injury, productivity) are scanned.
-- If `benefits` is set, a closing beat is added to scene 4 together with "Designed functions; outcome data not yet available."
+- If `benefits` is set, a closing beat is added to scene 4.
 - App screens are never upscaled beyond `MAX_UPSCALE` (1.5x) and are drawn with no filters.
 - The decorative world map is a land mask (Natural Earth 110m via `world-atlas`, public domain; `scripts/gen-world-dots.mjs`), one uniform colour and opacity: no regional shading or values.
 

@@ -1,14 +1,6 @@
 import React from "react";
 import { AbsoluteFill, useCurrentFrame } from "remotion";
-import {
-  ADVANTAGES,
-  BENEFITS_FOOTNOTE,
-  COLORS,
-  FILES,
-  SAFE,
-  TEXT,
-  benefits,
-} from "../config";
+import { ADVANTAGES, COLORS, FILES, SAFE, TEXT, benefits } from "../config";
 import { LogoMark } from "../components/Logo";
 import { PhoneFrame } from "../components/PhoneFrame";
 import { Placeholder } from "../components/Placeholder";
@@ -313,7 +305,7 @@ const HeaderPhone: React.FC = () => {
   );
 };
 
-/** Optional: only when config.benefits is set. Always carries the "designed functions" footnote. */
+/** Optional: only when config.benefits is set. */
 const BenefitsBeat: React.FC = () => {
   const frame = useCurrentFrame();
   if (!benefits) return null;
@@ -333,14 +325,11 @@ const BenefitsBeat: React.FC = () => {
           {b}
         </T>
       ))}
-      <T size={44} color={COLORS.grey} maxLines={2} style={{ marginTop: 24 }}>
-        {BENEFITS_FOOTNOTE}
-      </T>
     </AbsoluteFill>
   );
 };
 
-/** App advantages, top right beside the wordmark; always with the "designed functions" footnote. */
+/** App advantages, top right beside the wordmark. */
 const AdvantageBanner: React.FC = () => {
   const frame = useCurrentFrame();
   return (
@@ -355,9 +344,6 @@ const AdvantageBanner: React.FC = () => {
     >
       <T size={44} weight={600} maxLines={1}>
         {ADVANTAGES.app.join(" \u00B7 ")}
-      </T>
-      <T size={44} color={COLORS.grey} maxLines={1}>
-        {BENEFITS_FOOTNOTE}
       </T>
     </div>
   );

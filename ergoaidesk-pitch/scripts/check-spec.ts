@@ -111,7 +111,6 @@ ok(`linted ${files.length} source files (emoji, font size, palette, risk colours
 const onScreen = JSON.stringify([C.TEXT, C.claims, C.NARRATION, C.TEAM_NAMES, C.SOURCE_LINE, C.questionnaireName, C.benefits, C.MOCKUP_LABEL]).toLowerCase();
 for (const w of C.FORBIDDEN_WORDS) if (onScreen.includes(w.toLowerCase())) fail(`forbidden phrase on screen: "${w}"`);
 ok("no forbidden phrases in on-screen text");
-if (C.benefits && !C.BENEFITS_FOOTNOTE) fail("benefits shown without footnote");
 const claimTxt = C.claims.map((c) => c.text).join(" ");
 if (/(reduc|prevent|productiv|injur|effective)/i.test(claimTxt)) fail("claim cards mention effectiveness/injury/productivity");
 else ok("claim cards state validation status only");
