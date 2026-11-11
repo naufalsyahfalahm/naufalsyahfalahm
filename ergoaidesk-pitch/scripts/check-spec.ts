@@ -146,7 +146,7 @@ t && t.lo < -0.2 && t.hi > 0.95 ? ok(`Fisher 95% CI fixture = ${t.lo.toFixed(2)}
 // ---- slots that render as placeholders
 const slots: Array<[string, string]> = [
   ["hook footage", C.FILES.hookFootage],
-  ["app header crop (scene 4)", C.FILES.screenHeader],
+  ["app home screen (scene 4)", C.FILES.screenHome],
   ["app upload screen (scene 5a)", C.FILES.screenUpload],
   ["demo-pose recording", C.RECORDINGS.pose.file],
   ["demo-questionnaire recording", C.RECORDINGS.questionnaire.file],

@@ -65,10 +65,10 @@ export const ASSETS: Record<string, AssetInfo> = {
     "fps": 30,
     "durationSec": 12.6
   },
-  "screens/app-home-header-crop.png": {
+  "screens/app-home-screen.png": {
     "exists": true,
     "width": 780,
-    "height": 300
+    "height": 1688
   },
   "screens/app-upload-screen-top.png": {
     "exists": true,

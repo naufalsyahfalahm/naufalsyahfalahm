@@ -113,7 +113,7 @@ export const FILES = {
   presenterFootage: "footage/presenter.mp4",
   screenUpload: "screens/app-upload-screen.png", // side view (mockup: lateral capture screen, cropped above its placeholder text)
   screenUploadTop: "screens/app-upload-screen-top.png", // top view (mockup: superior capture screen)
-  screenHeader: "screens/app-home-header-crop.png",
+  screenHome: "screens/app-home-screen.png", // full home screen (mockup: mock-01-beranda)
   logo: "brand/logo.png", // optional; a simple vector mark is drawn when absent
   logoUgm: "brand/ugm.png",
   logoBritishCouncil: "brand/british-council.png",
@@ -306,11 +306,12 @@ export const FOOTAGE_PRIVACY: Record<
 // ---------------------------------------------------------------- captions
 export const captionsEnabled = true;
 /** Where the caption sits per scene: full width, or left column when a phone occupies the right. */
-export const CAPTION_LAYOUT: Record<SceneKey, "full" | "left"> = {
+/** "full": whole width; "wide": left of a phone column (1330 px); "left": left column beside a large phone (1120 px). */
+export const CAPTION_LAYOUT: Record<SceneKey, "full" | "wide" | "left"> = {
   hook: "full",
   problem: "full",
   gap: "full",
-  solution: "full",
+  solution: "wide",
   demo: "left",
   results: "full",
   closing: "full",

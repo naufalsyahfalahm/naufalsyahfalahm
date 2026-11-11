@@ -33,7 +33,7 @@ Frame ranges, on-screen text, colours, file paths, team names, caption toggle (`
 | File (under `public/`) | Used in | If missing |
 |---|---|---|
 | `footage/hook.mp4` | Scene 1 | Flat illustration (slump, then hand on neck); the "Ilustrasi" tag is off (`showIllustrationTag`) |
-| `screens/app-home-header-crop.png` | Scene 4, phone frame beside the diagram. Currently the top 300 px of `mock-01-beranda.png` (header and title) | Labelled placeholder phone |
+| `screens/app-home-screen.png` | Scene 4, full home screen in a phone frame at the right. Currently `mock-01-beranda.png` in full | Labelled placeholder phone |
 | `screens/app-upload-screen.png`, `app-upload-screen-top.png` | Scene 5a (`demoMode: "photos"`): side view, then top view, slow pan. Currently the mockup capture screens (lateral, superior) cropped above their placeholder text; callouts "Lateral view" and "Superior view (connections 8-13)" list the points analysed in each view | Labelled placeholder phone, callouts still shown |
 | `recordings/demo-pose.mp4` | Scene 5b | `[REKAMAN: ganti demo-pose.mp4]` |
 | `recordings/demo-questionnaire.mp4` | Scene 5c | `[REKAMAN: ganti demo-questionnaire.mp4]` |

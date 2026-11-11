@@ -13,7 +13,7 @@ export const Captions: React.FC = () => {
   const cue = cues.find((c) => frame >= c.from && frame < c.to);
   if (!cue) return null;
   const layout = CAPTION_LAYOUT[cue.scene];
-  const width = layout === "left" ? 1120 : WIDTH - 2 * SAFE;
+  const width = layout === "left" ? 1120 : layout === "wide" ? 1330 : WIDTH - 2 * SAFE;
   const opacity = fade(frame, cue.from, 8, cue.to, 8);
   return (
     <div

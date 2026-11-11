@@ -273,29 +273,30 @@ const Wordmark: React.FC = () => {
   );
 };
 
-const HeaderPhone: React.FC = () => {
+/** The full home screen (mockup) in a phone frame at the right; downscaled from 780 px, never enlarged. */
+const HomePhone: React.FC = () => {
   const frame = useCurrentFrame();
   const k = prog(frame, 540, 610);
-  const geo = useScreenGeometry(FILES.screenHeader, 424);
-  const present = hasAsset(FILES.screenHeader) && geo;
-  const w = present ? geo.w : 424;
-  const h = present ? geo.h : 300;
+  const geo = useScreenGeometry(FILES.screenHome, 360);
+  const present = hasAsset(FILES.screenHome) && geo;
+  const w = present ? geo.w : 360;
+  const h = present ? geo.h : 779;
   return (
     <div
       style={{
         position: "absolute",
         left: 1920 - SAFE - (w + 34),
-        top: GROUP_TOP,
+        top: 100,
         opacity: k,
         transform: `translateX(${(1 - k) * 420}px)`,
       }}
     >
-      <PhoneFrame screenW={w} screenH={h} open fadeH={28}>
+      <PhoneFrame screenW={w} screenH={h}>
         {present ? (
-          <ScreenImage file={FILES.screenHeader} width={w} />
+          <ScreenImage file={FILES.screenHome} width={w} />
         ) : (
           <Placeholder
-            label="[LAYAR APP: ganti app-home-header-crop.png]"
+            label="[LAYAR APP: ganti app-home-screen.png]"
             style={{ width: w, height: h }}
             size={44}
           />
@@ -337,12 +338,12 @@ const AdvantageBanner: React.FC = () => {
       style={{
         position: "absolute",
         left: 700,
-        right: SAFE,
-        top: 88,
+        width: 700,
+        top: 84,
         opacity: fade(frame, 560, 20),
       }}
     >
-      <T size={44} weight={600} maxLines={1}>
+      <T size={44} weight={600} maxLines={2}>
         {ADVANTAGES.app.join(" \u00B7 ")}
       </T>
     </div>
@@ -366,7 +367,7 @@ export const SceneSolution: React.FC = () => {
       >
         <Flow />
       </div>
-      <HeaderPhone />
+      <HomePhone />
       <AdvantageBanner />
       <BenefitsBeat />
     </AbsoluteFill>
