@@ -176,6 +176,22 @@ export const RECORDING_CONTENT_BOX = { w: 390, h: 844 };
 export const MOCKUP_LABEL = "Mockup antarmuka (data simulasi)";
 /** Set false only when real app recordings replace the mockups. */
 export const recordingsAreMockups = true;
+/** The "Mockup antarmuka (data simulasi)" label is turned off at the author's request (public/MOCKUP-README.txt asks for it). */
+export const showMockupLabel = false;
+
+/**
+ * App advantages shown where the mockup label used to be. Each is shown with BENEFITS_FOOTNOTE.
+ * app: from the original brief. photos / pose / questionnaire: the app screens' own wording
+ * ("Foto hanya digunakan untuk analisis dan tidak dipublikasikan", "Panduan keypoint real-time",
+ * "Jawaban individual tidak ditampilkan kepada atasan atau manajemen"). dashboard: from the brief.
+ */
+export const ADVANTAGES = {
+  app: ["Instant, objective check", "Recheck over time"],
+  photos: "Photos are used only for analysis and are not published",
+  pose: "Real-time keypoint guidance",
+  questionnaire: "Individual answers are not shown to supervisors or management",
+  dashboard: "Specific fixes such as monitor height, distance, seating",
+} as const;
 
 // ---------------------------------------------------------------- text
 export const TEXT = {
@@ -199,8 +215,10 @@ export const TEXT = {
     recs: ["Targeted", "Recommendations"],
   },
   demo: {
-    photoSide: "Side view: back and neck posture",
-    photoTop: "Top view: shoulder and head symmetry",
+    photoSide: "Lateral view",
+    photoTop: "Superior view (connections 8\u201313)",
+    lateralItems: ["Neck", "Elbow", "Wrist", "Hip\u2013knee", "Knee\u2013ankle"],
+    superiorItems: ["Right wrist (mouse arm)", "Right hand on mouse (grey)", "Left wrist"],
     poseTitle: "Posture capture",
     poseSub: "YOLOv11 body keypoints",
     questionnaireTitle: "Brief questionnaire",

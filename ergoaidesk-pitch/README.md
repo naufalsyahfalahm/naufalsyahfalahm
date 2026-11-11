@@ -34,7 +34,7 @@ Frame ranges, on-screen text, colours, file paths, team names, caption toggle (`
 |---|---|---|
 | `footage/hook.mp4` | Scene 1 | Flat illustration (slump, then hand on neck); the "Ilustrasi" tag is off (`showIllustrationTag`) |
 | `screens/app-home-header-crop.png` | Scene 4, phone frame beside the diagram. Currently the top 300 px of `mock-01-beranda.png` (header and title) | Labelled placeholder phone |
-| `screens/app-upload-screen.png`, `app-upload-screen-top.png` | Scene 5a (`demoMode: "photos"`): side view, then top view, slow pan. Currently the mockup capture screens (lateral, superior) cropped above their placeholder text | Labelled placeholder phone, callouts still shown |
+| `screens/app-upload-screen.png`, `app-upload-screen-top.png` | Scene 5a (`demoMode: "photos"`): side view, then top view, slow pan. Currently the mockup capture screens (lateral, superior) cropped above their placeholder text; callouts "Lateral view" and "Superior view (connections 8-13)" list the points analysed in each view | Labelled placeholder phone, callouts still shown |
 | `recordings/demo-pose.mp4` | Scene 5b | `[REKAMAN: ganti demo-pose.mp4]` |
 | `recordings/demo-questionnaire.mp4` | Scene 5c | `[REKAMAN: ganti demo-questionnaire.mp4]` |
 | `recordings/demo-dashboard.mp4` | Scene 5d | `[REKAMAN: ganti demo-dashboard.mp4]` |
@@ -51,9 +51,11 @@ Assumptions: roughly linear association; CI assumes approximately bivariate-norm
 
 ## The supplied recordings are mockups
 
-`public/MOCKUP-README.txt` states that every screen and recording is a **mockup with simulated data** (keypoints and results illustrative).
-They are therefore shown with the label **"Mockup antarmuka (data simulasi)"** (`MOCKUP_LABEL`), contrary to the generic rule that recordings carry no tag.
-Set `recordingsAreMockups = false` only when real app recordings replace them.
+`public/MOCKUP-README.txt` states that every screen and recording is a **mockup with simulated data** (keypoints and results illustrative) and asks for the label
+"Mockup antarmuka (data simulasi)". **At the author's request the label is not shown** (`showMockupLabel = false` in `src/config.ts`; set it to `true` to restore it).
+In its place the video shows app advantages (`ADVANTAGES`), each followed by the footnote "Designed functions; outcome data not yet available.":
+"Instant, objective check" and "Recheck over time" (scene 4), and in scene 5 the app screens' own statements about photos, real-time keypoint guidance and answer privacy, plus
+"Specific fixes such as monitor height, distance, seating". The screens and recordings are still simulated; without the label nothing on screen says so.
 
 Two technical facts about these files:
 

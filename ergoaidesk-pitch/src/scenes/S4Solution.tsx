@@ -1,6 +1,14 @@
 import React from "react";
 import { AbsoluteFill, useCurrentFrame } from "remotion";
-import { BENEFITS_FOOTNOTE, COLORS, FILES, MOCKUP_LABEL, SAFE, TEXT, benefits, recordingsAreMockups } from "../config";
+import {
+  ADVANTAGES,
+  BENEFITS_FOOTNOTE,
+  COLORS,
+  FILES,
+  SAFE,
+  TEXT,
+  benefits,
+} from "../config";
 import { LogoMark } from "../components/Logo";
 import { PhoneFrame } from "../components/PhoneFrame";
 import { Placeholder } from "../components/Placeholder";
@@ -31,22 +39,95 @@ type NodeDef = {
 };
 
 const NODES: NodeDef[] = [
-  { id: "camera", x: COL_A, y: 0, h: 96, lines: [F.camera], fill: COLORS.teal, color: COLORS.white, at: 285 },
-  { id: "pose", x: COL_A, y: 140, h: 136, lines: F.pose, fill: COLORS.teal, color: COLORS.white, at: 325 },
-  { id: "physical", x: COL_A, y: 320, h: 96, lines: [F.physical], fill: COLORS.teal, color: COLORS.white, at: 380 },
-  { id: "questionnaire", x: COL_B, y: 160, h: 96, lines: [F.questionnaire], fill: COLORS.lilac, color: COLORS.navy, at: 440 },
-  { id: "psych", x: COL_B, y: 320, h: 96, lines: [F.psych], fill: COLORS.lilac, color: COLORS.navy, at: 625 },
-  { id: "merge", x: COL_A, y: 464, h: 136, lines: F.merge, fill: COLORS.white, color: COLORS.navy, at: 735 },
-  { id: "recs", x: COL_B, y: 464, h: 136, lines: F.recs, fill: COLORS.grey, color: COLORS.navy, at: 865 },
+  {
+    id: "camera",
+    x: COL_A,
+    y: 0,
+    h: 96,
+    lines: [F.camera],
+    fill: COLORS.teal,
+    color: COLORS.white,
+    at: 285,
+  },
+  {
+    id: "pose",
+    x: COL_A,
+    y: 140,
+    h: 136,
+    lines: F.pose,
+    fill: COLORS.teal,
+    color: COLORS.white,
+    at: 325,
+  },
+  {
+    id: "physical",
+    x: COL_A,
+    y: 320,
+    h: 96,
+    lines: [F.physical],
+    fill: COLORS.teal,
+    color: COLORS.white,
+    at: 380,
+  },
+  {
+    id: "questionnaire",
+    x: COL_B,
+    y: 160,
+    h: 96,
+    lines: [F.questionnaire],
+    fill: COLORS.lilac,
+    color: COLORS.navy,
+    at: 440,
+  },
+  {
+    id: "psych",
+    x: COL_B,
+    y: 320,
+    h: 96,
+    lines: [F.psych],
+    fill: COLORS.lilac,
+    color: COLORS.navy,
+    at: 625,
+  },
+  {
+    id: "merge",
+    x: COL_A,
+    y: 464,
+    h: 136,
+    lines: F.merge,
+    fill: COLORS.white,
+    color: COLORS.navy,
+    at: 735,
+  },
+  {
+    id: "recs",
+    x: COL_B,
+    y: 464,
+    h: 136,
+    lines: F.recs,
+    fill: COLORS.grey,
+    color: COLORS.navy,
+    at: 865,
+  },
 ];
 
-type Edge = { d: string; color: string; at: number; head: "teal" | "lilac" | "white" };
+type Edge = {
+  d: string;
+  color: string;
+  at: number;
+  head: "teal" | "lilac" | "white";
+};
 const EDGES: Edge[] = [
   { d: "M280 100 V136", color: COLORS.teal, at: 310, head: "teal" },
   { d: "M280 280 V316", color: COLORS.teal, at: 358, head: "teal" },
   { d: "M944 260 V316", color: COLORS.lilac, at: 600, head: "lilac" },
   { d: "M280 420 V460", color: COLORS.white, at: 720, head: "white" },
-  { d: "M944 420 V436 Q944 440 940 440 H484 Q480 440 480 444 V460", color: COLORS.white, at: 720, head: "white" },
+  {
+    d: "M944 420 V436 Q944 440 940 440 H484 Q480 440 480 444 V460",
+    color: COLORS.white,
+    at: 720,
+    head: "white",
+  },
   { d: "M564 532 H660", color: COLORS.white, at: 850, head: "white" },
 ];
 
@@ -70,7 +151,15 @@ const Node: React.FC<NodeDef> = ({ x, y, h, lines, fill, color, at }) => {
         transform: `translateY(${(1 - k) * 28}px) scale(${0.94 + 0.06 * k})`,
       }}
     >
-      <T size={44} font="heading" weight={700} color={color} maxLines={lines.length} align="center" lineHeight={1.1}>
+      <T
+        size={44}
+        font="heading"
+        weight={700}
+        color={color}
+        maxLines={lines.length}
+        align="center"
+        lineHeight={1.1}
+      >
         {lines.map((l, i) => (
           <React.Fragment key={i}>
             {i > 0 ? <br /> : null}
@@ -82,16 +171,34 @@ const Node: React.FC<NodeDef> = ({ x, y, h, lines, fill, color, at }) => {
   );
 };
 
-const HEAD_ID = { teal: "ah-teal", lilac: "ah-lilac", white: "ah-white" } as const;
+const HEAD_ID = {
+  teal: "ah-teal",
+  lilac: "ah-lilac",
+  white: "ah-white",
+} as const;
 
 const Flow: React.FC = () => {
   const frame = useCurrentFrame();
   return (
     <>
-      <svg width={1224} height={620} viewBox="0 0 1224 620" style={{ position: "absolute", left: 0, top: 0, overflow: "visible" }}>
+      <svg
+        width={1224}
+        height={620}
+        viewBox="0 0 1224 620"
+        style={{ position: "absolute", left: 0, top: 0, overflow: "visible" }}
+      >
         <defs>
           {(["teal", "lilac", "white"] as const).map((c) => (
-            <marker key={c} id={HEAD_ID[c]} markerWidth={24} markerHeight={24} refX={20} refY={12} orient="auto" markerUnits="userSpaceOnUse">
+            <marker
+              key={c}
+              id={HEAD_ID[c]}
+              markerWidth={24}
+              markerHeight={24}
+              refX={20}
+              refY={12}
+              orient="auto"
+              markerUnits="userSpaceOnUse"
+            >
               <path d="M0 1 L22 12 L0 23 Z" fill={COLORS[c]} />
             </marker>
           ))}
@@ -142,7 +249,12 @@ const Wordmark: React.FC = () => {
         }}
       >
         <LogoMark size={64} />
-        <T size={60} font="heading" maxLines={1} style={{ whiteSpace: "nowrap" }}>
+        <T
+          size={60}
+          font="heading"
+          maxLines={1}
+          style={{ whiteSpace: "nowrap" }}
+        >
           {TEXT.wordmark}
         </T>
       </div>
@@ -155,7 +267,13 @@ const Wordmark: React.FC = () => {
           opacity: fade(frame, 105, 20, 235, 20),
         }}
       >
-        <T size={44} weight={600} color={COLORS.grey} maxLines={1} align="center">
+        <T
+          size={44}
+          weight={600}
+          color={COLORS.grey}
+          maxLines={1}
+          align="center"
+        >
           {TEXT.wordmarkSub}
         </T>
       </div>
@@ -184,16 +302,13 @@ const HeaderPhone: React.FC = () => {
         {present ? (
           <ScreenImage file={FILES.screenHeader} width={w} />
         ) : (
-          <Placeholder label="[LAYAR APP: ganti app-home-header-crop.png]" style={{ width: w, height: h }} size={44} />
+          <Placeholder
+            label="[LAYAR APP: ganti app-home-header-crop.png]"
+            style={{ width: w, height: h }}
+            size={44}
+          />
         )}
       </PhoneFrame>
-      {present && recordingsAreMockups ? (
-        <div style={{ marginTop: 18, width: w + 34 }}>
-          <T size={44} weight={600} color={COLORS.grey} maxLines={2} align="center">
-            {MOCKUP_LABEL}
-          </T>
-        </div>
-      ) : null}
     </div>
   );
 };
@@ -204,7 +319,15 @@ const BenefitsBeat: React.FC = () => {
   if (!benefits) return null;
   const o = fade(frame, 905, 16);
   return (
-    <AbsoluteFill style={{ background: COLORS.navy, opacity: o, padding: SAFE, justifyContent: "center", gap: 28 }}>
+    <AbsoluteFill
+      style={{
+        background: COLORS.navy,
+        opacity: o,
+        padding: SAFE,
+        justifyContent: "center",
+        gap: 28,
+      }}
+    >
       {benefits.map((b, i) => (
         <T key={i} size={56} font="heading" maxLines={2}>
           {b}
@@ -214,6 +337,29 @@ const BenefitsBeat: React.FC = () => {
         {BENEFITS_FOOTNOTE}
       </T>
     </AbsoluteFill>
+  );
+};
+
+/** App advantages, top right beside the wordmark; always with the "designed functions" footnote. */
+const AdvantageBanner: React.FC = () => {
+  const frame = useCurrentFrame();
+  return (
+    <div
+      style={{
+        position: "absolute",
+        left: 700,
+        right: SAFE,
+        top: 88,
+        opacity: fade(frame, 560, 20),
+      }}
+    >
+      <T size={44} weight={600} maxLines={1}>
+        {ADVANTAGES.app.join(" \u00B7 ")}
+      </T>
+      <T size={44} color={COLORS.grey} maxLines={1}>
+        {BENEFITS_FOOTNOTE}
+      </T>
+    </div>
   );
 };
 
@@ -235,6 +381,7 @@ export const SceneSolution: React.FC = () => {
         <Flow />
       </div>
       <HeaderPhone />
+      <AdvantageBanner />
       <BenefitsBeat />
     </AbsoluteFill>
   );
