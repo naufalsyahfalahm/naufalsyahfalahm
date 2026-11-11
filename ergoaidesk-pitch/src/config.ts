@@ -123,6 +123,9 @@ export const FILES = {
   validationCsv: "data/validation.csv",
   voiceover: "voiceover.mp3",
   music: "music.mp3",
+  /** Face tracks aligned to the main timeline (public/pip is a symlink to the work folder; not committed). */
+  pipA: "pip/face_A_aligned.mp4",
+  pipB: "pip/face_B_aligned.mp4",
 } as const;
 
 /**
@@ -319,6 +322,10 @@ export const CAPTION_LAYOUT: Record<SceneKey, "full" | "wide" | "left"> = {
   results: "full",
   closing: "full",
 };
+/** PiP keep-out for captions: x range (right PiP) and, in the closing, the narrower band between the two PiPs. */
+export const CAPTION_X = { min: 48, max: 1402, closingMin: 518 } as const;
+/** Closing cues in order: where each sits ("band" = x 518-1402 at the usual height, "above" = above the PiP row). */
+export const CAPTION_CLOSING: ReadonlyArray<{ place: "band" | "above" }> = [{ place: "above" }, { place: "band" }, { place: "band" }];
 /** Frames before/after a scene's first/last cue (only for auto-timed scenes). */
 export const CAPTION_LEAD = 12;
 export const CAPTION_TAIL = 12;
@@ -418,3 +425,20 @@ export const showPlaceholderLabels = true;
 export const showIllustrationTag = false;
 /** App screens are shown at this scale (clamped to MAX_UPSCALE). */
 export const SCREEN_SCALE = 1.25;
+
+// ---------------------------------------------------------------- picture-in-picture (presenter faces)
+/** PiP geometry (1080p): width_pct of the frame, margin from the edges, border (inside the box), fade. */
+export const PIP = { widthPct: 22, marginPx: 48, borderPx: 4, borderColor: "#0B7A7C", fadeS: 0.3, keepOutGapPx: 24 } as const;
+export const PIP_W = Math.round((WIDTH * PIP.widthPct) / 100); // 422
+export const PIP_H = Math.round((PIP_W * 9) / 16); // 237
+export const PIP_RIGHT = { x: WIDTH - PIP.marginPx - PIP_W, y: HEIGHT - PIP.marginPx - PIP_H }; // 1450, 795
+export const PIP_LEFT = { x: PIP.marginPx, y: HEIGHT - PIP.marginPx - PIP_H }; // 48, 795 (closing only)
+/** Keep-out zones: the PiP plus a gap. Right: x >= 1426, y >= 771. Left (closing only): x <= 494, y >= 771. */
+export const KEEP_OUT = {
+  right: { xMin: PIP_RIGHT.x - PIP.keepOutGapPx, yMin: PIP_RIGHT.y - PIP.keepOutGapPx },
+  left: { xMax: PIP_LEFT.x + PIP_W + PIP.keepOutGapPx, yMin: PIP_LEFT.y - PIP.keepOutGapPx },
+} as const;
+/** Closing layout (frames): faces B (left) and A (right) for the whole closing scene. */
+export const PIP_CLOSING = { left: "B", right: "A" } as const;
+/** Ranges (frames) where a PiP is hidden because the scene cannot be re-laid-out around it. Empty = none. */
+export const PIP_HIDE: ReadonlyArray<{ side: "left" | "right"; from: number; to: number }> = [];

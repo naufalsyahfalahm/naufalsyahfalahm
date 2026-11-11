@@ -44,6 +44,20 @@ export const ASSETS: Record<string, AssetInfo> = {
     "fps": 0,
     "durationSec": 180.024
   },
+  "pip/face_A_aligned.mp4": {
+    "exists": true,
+    "width": 854,
+    "height": 480,
+    "fps": 30,
+    "durationSec": 180
+  },
+  "pip/face_B_aligned.mp4": {
+    "exists": true,
+    "width": 854,
+    "height": 480,
+    "fps": 30,
+    "durationSec": 180
+  },
   "recordings/demo-dashboard.mp4": {
     "exists": true,
     "width": 780,

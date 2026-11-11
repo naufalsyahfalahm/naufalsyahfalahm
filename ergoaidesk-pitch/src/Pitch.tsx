@@ -3,6 +3,7 @@ import {
   AbsoluteFill,
   Audio,
   Sequence,
+  getInputProps,
   interpolate,
   useCurrentFrame,
 } from "remotion";
@@ -24,6 +25,8 @@ import {
   type SceneKey,
 } from "./config";
 import { Captions } from "./components/Caption";
+import { PipLayer } from "./components/Pip";
+import { LayoutProbe } from "./components/LayoutProbe";
 import { hasAsset, src } from "./lib/assets";
 import { easeInOut } from "./lib/motion";
 import { SceneHook } from "./scenes/S1Hook";
@@ -156,6 +159,8 @@ export const Pitch: React.FC = () => (
     })}
     <Transitions />
     <Captions />
+    <PipLayer />
+    {getInputProps().probe ? <LayoutProbe /> : null}
     {hasAsset(FILES.voiceover) ? <Voiceover /> : null}
     {musicEnabled && hasAsset(FILES.music) ? (
       <Audio

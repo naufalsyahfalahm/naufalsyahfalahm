@@ -8,3 +8,7 @@ out
 
 # uncut voiceover recording (22 MB, source for scripts/build-voiceover.py; copy it to reference/ to rebuild)
 reference/AI_No_Cut_Audio.mp3
+
+# presenter-face PiP tracks (symlink to the work folder; derived from the speakers recordings)
+public/pip
+work
