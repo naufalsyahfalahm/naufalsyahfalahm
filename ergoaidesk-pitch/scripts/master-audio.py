@@ -50,7 +50,12 @@ if a.closing:
 voice_raw = voice.copy()
 chain = ("highpass=f=90,afftdn=nr=10:nf=-40,equalizer=f=220:t=q:w=1.0:g=-3,equalizer=f=3200:t=q:w=0.9:g=2.5,"
          "lowpass=f=12000,deesser=i=0.25,acompressor=threshold=0.063:ratio=2.5:attack=10:release=150:makeup=2,alimiter=limit=0.55:attack=3:release=60:level=disabled")
-voice = ff(voice[:, None], chain, 1)[:, 0][:N]
+voice = ff(voice[:, None], chain, 1)[:, 0]
+# the chain (afftdn) delays the voice by about 28 ms; measure it against the unprocessed voice and remove it
+_n = N; _X = np.fft.rfft(voice_raw[:_n], 2 * _n); _Y = np.fft.rfft(voice[:_n], 2 * _n); _c = np.fft.irfft(_Y * np.conj(_X)); _m = 9600
+_d = int(np.argmax(np.concatenate([_c[-_m:], _c[:_m + 1]]))) - _m
+print(f"voice chain latency removed: {_d / SR * 1000:.1f} ms")
+voice = np.concatenate([voice[max(_d, 0):], np.zeros(max(_d, 0), dtype=np.float32)])[:N]
 if len(voice) < N: voice = np.pad(voice, (0, N - len(voice)))
 # music: speech-activity ducking
 music = rd(root / "public/music.mp3", 2)[:N]

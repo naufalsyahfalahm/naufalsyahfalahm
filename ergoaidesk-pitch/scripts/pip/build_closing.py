@@ -11,7 +11,13 @@ def lufs(x):
 def tp(x):
     y=np.frombuffer(subprocess.run(["ffmpeg","-v","error","-f","f32le","-ar",str(SR),"-ac","1","-i","-","-af","aresample=192000","-f","f32le","-"],input=x.astype(np.float32).tobytes(),capture_output=True).stdout,dtype=np.float32)
     return float(20*np.log10(np.abs(y).max()+1e-12))
-def denoise(i,o): subprocess.run(["ffmpeg","-v","error","-y","-i",i,"-af","afftdn=nr=6:nf=-45","-ar",str(SR),o],check=True)
+def denoise(i,o):
+    subprocess.run(["ffmpeg","-v","error","-y","-i",i,"-af","afftdn=nr=6:nf=-45","-ar",str(SR),o],check=True)
+    # afftdn delays the signal (about 28 ms): measure it against the input and remove it, so timing is unchanged
+    a,b=rd(i),rd(o); n=min(len(a),len(b)); X=np.fft.rfft(a[:n],2*n); Y=np.fft.rfft(b[:n],2*n); c=np.fft.irfft(Y*np.conj(X)); m=4800
+    d=int(np.argmax(np.concatenate([c[-m:],c[:m+1]])))-m
+    wr(o,np.concatenate([b[max(d,0):],np.zeros(max(d,0),dtype=np.float32)]))
+    print("denoise latency removed: %.1f ms (%s)"%(d/SR*1000,i))
 denoise("work/tya_s1.wav","work/tya_s1_dn.wav"); denoise("work/tya2.wav","work/tya2_dn.wav"); denoise("work/zaky2.wav","work/zaky2_dn.wav")
 T1,T2,V=rd("work/tya_s1_dn.wav"),rd("work/tya2_dn.wav"),rd("work/zaky2_dn.wav")
 VO=rd("public/voiceover.mp3"); ref=lufs(VO[int(140*SR):int(160*SR)])
