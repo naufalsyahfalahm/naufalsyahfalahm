@@ -84,10 +84,10 @@ export const SCENE_ORDER: SceneKey[] = [
  */
 export const DEMO_PARTS = {
   photos: { from: 3000, to: 3260 }, // "photos" mode only
-  pose: { from: 3260, to: 3515 }, // "photos" mode
-  poseVideoMode: { from: 3000, to: 3515 }, // "video" mode
-  questionnaire: { from: 3515, to: 3700 },
-  dashboard: { from: 3700, to: 4200 },
+  pose: { from: 3260, to: 3526 }, // "photos" mode
+  poseVideoMode: { from: 3000, to: 3526 }, // "video" mode
+  questionnaire: { from: 3526, to: 3736 },
+  dashboard: { from: 3736, to: 4200 },
 } as const satisfies Record<string, Range>;
 
 /** "photos": 3000-3260 shows the app upload screen first. "video": pose recording runs 3000-3750. */
@@ -138,6 +138,8 @@ export type RecordingSpec = {
   rate: number;
   /** Playback rate when the clip fills the longer slot of demoMode "video" (optional). */
   rateVideoMode?: number;
+  /** After the trimmed clip has played: "hold" the last frame (default) or "pingpong" (scroll back and forth, eased). */
+  loop?: "hold" | "pingpong";
   placeholder: string;
 };
 export const RECORDINGS: Record<"pose" | "questionnaire" | "dashboard", RecordingSpec> = {
@@ -145,7 +147,7 @@ export const RECORDINGS: Record<"pose" | "questionnaire" | "dashboard", Recordin
     file: "recordings/demo-pose.mp4",
     startSec: 0,
     endSec: 7.0, // from 7.2 s the mockup shows "[durasi tahan sesuai protokol]"
-    rate: 0.84, // 7.0 s of clean clip over the 8.3 s sentence
+    rate: 0.79, // 7.0 s of clean clip over the 8.9 s sentence
     rateVideoMode: 0.41,
     placeholder: "[REKAMAN: ganti demo-pose.mp4]",
   },
@@ -153,14 +155,15 @@ export const RECORDINGS: Record<"pose" | "questionnaire" | "dashboard", Recordin
     file: "recordings/demo-questionnaire.mp4",
     startSec: 4.2, // 1.2-4.0 s shows "[Teks final mengikuti persetujuan etik]"
     endSec: 11.7, // from 12.0 s "[usulan, perlu keputusan]"
-    rate: 1.25, // 7.5 s of clean clip over the 6.1 s sentence
+    rate: 1.1, // 7.5 s of clean clip over the 7 s sentence
     placeholder: "[REKAMAN: ganti demo-questionnaire.mp4]",
   },
   dashboard: {
     file: "recordings/demo-dashboard.mp4",
     startSec: 2.8, // 0-2.6 s "[ ]" note; from 6.0 s "[Uraian AI: ...]" findings
     endSec: 5.8,
-    rate: 0.4, // 3.0 s of clean clip, then the last frame is held for the rest of the slot
+    rate: 0.4, // 3.0 s of clean clip, played forward and back (eased) for the rest of the slot
+    loop: "pingpong",
     placeholder: "[REKAMAN: ganti demo-dashboard.mp4]",
   },
 };
@@ -353,25 +356,25 @@ export const NARRATION: Record<SceneKey, ReadonlyArray<{ text: string; at?: numb
     { text: "may be overlooked.", at: 2005, to: 2036 },
   ],
   solution: [
-    { text: "We developed ERGO-AI DESK,", at: 2094 },
-    { text: "an AI-assisted multidomain ergonomic assessment system for computer users.", at: 2150 },
+    { text: "We developed ERGO-AI DESK,", at: 2076 },
+    { text: "an AI-assisted multidomain ergonomic assessment system for computer users.", at: 2132 },
     {
-      text: "It combines YOLOv11-based computer vision to assess body posture and workstation characteristics", at: 2298,
+      text: "It combines YOLOv11-based computer vision to assess body posture and workstation characteristics", at: 2278,
     },
-    { text: "with brief self-report questionnaires covering ergonomic and psychosocial factors,", at: 2460 },
-    { text: "including lighting, break habits, and perceived psychological strain.", at: 2603 },
-    { text: "By integrating both assessments,", at: 2746 },
+    { text: "with brief self-report questionnaires covering ergonomic and psychosocial factors,", at: 2446 },
+    { text: "including lighting, break habits, and perceived psychological strain.", at: 2600 },
+    { text: "By integrating both assessments,", at: 2759 },
     {
-      text: "the system generates ergonomic risk scores and targeted workplace improvement recommendations.", at: 2800, to: 2996,
+      text: "the system generates ergonomic risk scores and targeted workplace improvement recommendations.", at: 2822, to: 2996,
     },
   ],
   demo: [
-    { text: "Users capture their working posture using a camera,", at: 3262 },
-    { text: "while YOLOv11 analyzes body keypoints and ergonomic indicators.", at: 3366 },
-    { text: "They then complete a brief questionnaire on workstation conditions,", at: 3516 },
-    { text: "work habits, and psychological strain.", at: 3619 },
-    { text: "Both results are integrated into a dashboard", at: 3702 },
-    { text: "displaying ergonomic risk scores and targeted improvement recommendations.", at: 3798, to: 3934 },
+    { text: "Users capture their working posture using a camera,", at: 3260 },
+    { text: "while YOLOv11 analyzes body keypoints and ergonomic indicators.", at: 3374 },
+    { text: "They then complete a brief questionnaire on workstation conditions,", at: 3526 },
+    { text: "work habits, and psychological strain.", at: 3648 },
+    { text: "Both results are integrated into a dashboard", at: 3736 },
+    { text: "displaying ergonomic risk scores and targeted improvement recommendations.", at: 3831, to: 3968 },
   ],
   results: [
     { text: "ERGO-AI DESK aims to provide accessible and comprehensive ergonomic screening,", at: 4246 },

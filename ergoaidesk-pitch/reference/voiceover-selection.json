@@ -1,6 +1,6 @@
 {
  "raw": "reference/AI_No_Cut_Audio.mp3",
- "note": "Per-sentence clips cut from the uncut recording. start/end are seconds in the raw file. '*' = take used by the first voiceover.",
+ "note": "Per-sentence clips cut from the uncut recording. start/end are seconds in the raw file. '*' = take used by the first voiceover. Scenes 4 and 5 are cut at phrase level (a sentence can join clips from two takes at a natural pause).",
  "speech_rms_db": -18.0,
  "max_internal_pause_s": 0.4,
  "gap_default_s": 0.5,
@@ -292,10 +292,11 @@
   },
   {
    "scene": "solution",
-   "first_onset_s": 69.7,
+   "first_onset_s": 69.1,
    "gaps_s": [
-    0.5,
-    0.6
+    0.45,
+    0.3,
+    0.5
    ],
    "units": [
     {
@@ -303,75 +304,28 @@
      "text": "We developed ERGO-AI DESK, an AI-assisted multidomain ergonomic assessment system for computer users.",
      "take": "r769*",
      "start": 769.4,
-     "end": 775.7,
-     "heard_small": "We developed Ergo AI desk, an AI assisted multidomain ergonomic assessment system for computer users.",
-     "candidates": [
-      {
-       "take": "r131",
-       "wer_base": 0.6,
-       "wer_small": 0.333
-      },
-      {
-       "take": "r719",
-       "wer_base": 0.2,
-       "wer_small": 0.133
-      },
-      {
-       "take": "r769*",
-       "wer_base": 0.133,
-       "wer_small": 0.0
-      }
-     ]
+     "end": 775.7
     },
     {
      "unit": 1,
-     "text": "It combines YOLOv11-based computer vision to assess body posture and workstation characteristics with brief self-report questionnaires covering ergonomic and psychosocial factors, including lighting, break habits, and perceived psychological strain.",
+     "text": "It combines YOLOv11-based computer vision to assess body posture and workstation characteristics",
      "take": "r769*",
      "start": 776.15,
-     "end": 790.3,
-     "heard_small": "It combines YOLO-V11-based computer vision to assess body posture and workstation characteristics, with brief self-report questionnaires covering ergonomic and psychosocial factors, including lighting, break habits, and perceive psychological strain.",
-     "candidates": [
-      {
-       "take": "r131",
-       "wer_base": 0.194,
-       "wer_small": 0.129
-      },
-      {
-       "take": "r719",
-       "wer_base": 0.161,
-       "wer_small": 0.194
-      },
-      {
-       "take": "r769*",
-       "wer_base": 0.258,
-       "wer_small": 0.097
-      }
-     ]
+     "end": 781.34
     },
     {
      "unit": 2,
+     "text": "with brief self-report questionnaires covering ergonomic and psychosocial factors, including lighting, break habits, and perceived psychological strain.",
+     "take": "r719",
+     "start": 732.33,
+     "end": 742.3
+    },
+    {
+     "unit": 3,
      "text": "By integrating both assessments, the system generates ergonomic risk scores and targeted workplace improvement recommendations.",
-     "take": "r769*",
-     "start": 791.4,
-     "end": 799.65,
-     "heard_small": "By integrating both assessments, the system generates ergonomic risk scores and targeted workplace improvement recommendations.",
-     "candidates": [
-      {
-       "take": "r131",
-       "wer_base": 0.4,
-       "wer_small": 0.2
-      },
-      {
-       "take": "r719",
-       "wer_base": 0.0,
-       "wer_small": 0.0
-      },
-      {
-       "take": "r769*",
-       "wer_base": 0.0,
-       "wer_small": 0.0
-      }
-     ]
+     "take": "r719",
+     "start": 743.0,
+     "end": 750.95
     }
    ]
   },
@@ -379,69 +333,38 @@
    "scene": "demo",
    "first_onset_s": 108.65,
    "gaps_s": [
+    0.35,
     0.55,
     0.55
    ],
    "units": [
     {
      "unit": 0,
-     "text": "Users capture their working posture using a camera, while YOLOv11 analyzes body keypoints and ergonomic indicators.",
-     "take": "r810*",
-     "start": 810.55,
-     "end": 818.4,
-     "heard_small": "Users captured their working posture using a camera, while YOLOv11 analyzed body key points and ergonomic indicators.",
-     "candidates": [
-      {
-       "take": "r173",
-       "wer_base": 0.5,
-       "wer_small": 0.5
-      },
-      {
-       "take": "r810*",
-       "wer_base": 0.375,
-       "wer_small": 0.25
-      }
-     ]
+     "text": "Users capture their working posture using a camera,",
+     "take": "r173",
+     "start": 173.0,
+     "end": 176.2
     },
     {
      "unit": 1,
-     "text": "They then complete a brief questionnaire on workstation conditions, work habits, and psychological strain.",
+     "text": "while YOLOv11 analyzes body keypoints and ergonomic indicators.",
      "take": "r810*",
-     "start": 818.85,
-     "end": 824.5,
-     "heard_small": "They then complete a brief questionnaire and workstation conditions, work habits and psychological strain.",
-     "candidates": [
-      {
-       "take": "r173",
-       "wer_base": 0.143,
-       "wer_small": 0.214
-      },
-      {
-       "take": "r810*",
-       "wer_base": 0.143,
-       "wer_small": 0.071
-      }
-     ]
+     "start": 813.85,
+     "end": 818.4
     },
     {
      "unit": 2,
+     "text": "They then complete a brief questionnaire on workstation conditions, work habits, and psychological strain.",
+     "take": "r173",
+     "start": 183.7,
+     "end": 190.25
+    },
+    {
+     "unit": 3,
      "text": "Both results are integrated into a dashboard displaying ergonomic risk scores and targeted improvement recommendations.",
      "take": "r810*",
      "start": 825.0,
-     "end": 832.3,
-     "heard_small": "Both results are integrated into a dashboard displaying ergonomic scores and targeted improvement recommendations.",
-     "candidates": [
-      {
-       "take": "r173",
-       "wer_base": 0.267,
-       "wer_small": 0.133
-      },
-      {
-       "take": "r810*",
-       "wer_base": 0.0,
-       "wer_small": 0.067
-      }
-     ]
+     "end": 832.3
     }
    ]
   },

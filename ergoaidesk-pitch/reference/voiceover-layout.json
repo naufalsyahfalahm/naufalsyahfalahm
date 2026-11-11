@@ -92,9 +92,9 @@
  {
   "scene": "solution",
   "unit": 0,
-  "take": "r769*",
-  "onset_s": 69.7,
-  "end_s": 76.1,
+  "take": "r769",
+  "onset_s": 69.1,
+  "end_s": 75.5,
   "gain_db": -3.7,
   "limited": true,
   "text": "We developed ERGO-AI DESK, an AI-assisted multidomain ergonomic assessment system for computer users."
@@ -102,49 +102,69 @@
  {
   "scene": "solution",
   "unit": 1,
-  "take": "r769*",
-  "onset_s": 76.6,
-  "end_s": 90.73,
+  "take": "r769",
+  "onset_s": 75.95,
+  "end_s": 81.15,
   "gain_db": -2.4,
   "limited": true,
-  "text": "It combines YOLOv11-based computer vision to assess body posture and workstation characteristics with brief self-report questionnaires covering ergonomic and psychosocial factors, including lighting, break habits, and perceived psychological strain."
+  "text": "It combines YOLOv11-based computer vision to assess body posture and workstation characteristics"
  },
  {
   "scene": "solution",
   "unit": 2,
-  "take": "r769*",
-  "onset_s": 91.33,
-  "end_s": 99.64,
-  "gain_db": -3.6,
-  "limited": false,
+  "take": "r719",
+  "onset_s": 81.45,
+  "end_s": 91.42,
+  "gain_db": -3.0,
+  "limited": true,
+  "text": "with brief self-report questionnaires covering ergonomic and psychosocial factors, including lighting, break habits, and perceived psychological strain."
+ },
+ {
+  "scene": "solution",
+  "unit": 3,
+  "take": "r719",
+  "onset_s": 91.92,
+  "end_s": 99.77,
+  "gain_db": -3.3,
+  "limited": true,
   "text": "By integrating both assessments, the system generates ergonomic risk scores and targeted workplace improvement recommendations."
  },
  {
   "scene": "demo",
   "unit": 0,
-  "take": "r810*",
+  "take": "r173",
   "onset_s": 108.65,
-  "end_s": 116.6,
-  "gain_db": -2.7,
-  "limited": true,
-  "text": "Users capture their working posture using a camera, while YOLOv11 analyzes body keypoints and ergonomic indicators."
+  "end_s": 111.9,
+  "gain_db": -2.6,
+  "limited": false,
+  "text": "Users capture their working posture using a camera,"
  },
  {
   "scene": "demo",
   "unit": 1,
-  "take": "r810*",
-  "onset_s": 117.15,
-  "end_s": 122.86,
-  "gain_db": -3.5,
-  "limited": false,
-  "text": "They then complete a brief questionnaire on workstation conditions, work habits, and psychological strain."
+  "take": "r810",
+  "onset_s": 112.25,
+  "end_s": 116.9,
+  "gain_db": -2.7,
+  "limited": true,
+  "text": "while YOLOv11 analyzes body keypoints and ergonomic indicators."
  },
  {
   "scene": "demo",
   "unit": 2,
-  "take": "r810*",
-  "onset_s": 123.41,
-  "end_s": 130.74,
+  "take": "r173",
+  "onset_s": 117.45,
+  "end_s": 123.98,
+  "gain_db": -2.6,
+  "limited": true,
+  "text": "They then complete a brief questionnaire on workstation conditions, work habits, and psychological strain."
+ },
+ {
+  "scene": "demo",
+  "unit": 3,
+  "take": "r810",
+  "onset_s": 124.53,
+  "end_s": 131.86,
   "gain_db": -5.5,
   "limited": false,
   "text": "Both results are integrated into a dashboard displaying ergonomic risk scores and targeted improvement recommendations."

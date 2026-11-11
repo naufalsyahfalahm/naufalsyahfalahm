@@ -1,6 +1,14 @@
 import React from "react";
 import { Freeze, Img, OffthreadVideo, useCurrentFrame } from "remotion";
-import { FILES, FOOTAGE_PRIVACY, FPS, MAX_UPSCALE, RECORDING_CONTENT_BOX, SCREEN_SCALE, type RecordingSpec } from "../config";
+import {
+  FILES,
+  FOOTAGE_PRIVACY,
+  FPS,
+  MAX_UPSCALE,
+  RECORDING_CONTENT_BOX,
+  SCREEN_SCALE,
+  type RecordingSpec,
+} from "../config";
 import { assetInfo, hasAsset, src } from "../lib/assets";
 import { Placeholder } from "./Placeholder";
 
@@ -8,18 +16,28 @@ import { Placeholder } from "./Placeholder";
  * Demo recording: trims to [startSec, endSec], plays at `rate`, then holds the last frame
  * until the slot ends. Missing file => labelled placeholder (no fake UI).
  */
-export const RecordingSlot: React.FC<{ spec: RecordingSpec; width: number; height: number }> = ({
-  spec,
-  width,
-  height,
-}) => {
+export const RecordingSlot: React.FC<{
+  spec: RecordingSpec;
+  width: number;
+  height: number;
+}> = ({ spec, width, height }) => {
   const frame = useCurrentFrame();
   if (!hasAsset(spec.file)) {
     return <Placeholder label={spec.placeholder} style={{ width, height }} />;
   }
   const info = assetInfo(spec.file);
-  const playFrames = Math.floor(((spec.endSec - spec.startSec) * FPS) / spec.rate);
-  const f = Math.min(frame, playFrames - 1);
+  const playFrames = Math.floor(
+    ((spec.endSec - spec.startSec) * FPS) / spec.rate,
+  );
+  const last = playFrames - 1;
+  // hold: freeze on the last frame. pingpong: one eased forward-and-back sweep per 2*last frames
+  // (the first sweep starts at the first frame), so a short clean clip keeps moving.
+  const f =
+    spec.loop === "pingpong"
+      ? Math.round(
+          (last * (1 - Math.cos((2 * Math.PI * frame) / (2 * last)))) / 2,
+        )
+      : Math.min(frame, last);
   // Show only the content box (top-left of the canvas) scaled to fill the phone screen.
   const k = width / RECORDING_CONTENT_BOX.w;
   const vw = (info.width ?? RECORDING_CONTENT_BOX.w) * k;
@@ -32,7 +50,13 @@ export const RecordingSlot: React.FC<{ spec: RecordingSpec; width: number; heigh
           muted
           trimBefore={Math.round(spec.startSec * FPS)}
           playbackRate={spec.rate}
-          style={{ position: "absolute", left: 0, top: 0, width: vw, height: vh }}
+          style={{
+            position: "absolute",
+            left: 0,
+            top: 0,
+            width: vw,
+            height: vh,
+          }}
         />
       </Freeze>
     </div>
@@ -40,7 +64,13 @@ export const RecordingSlot: React.FC<{ spec: RecordingSpec; width: number; heigh
 };
 
 /** Blur a region (percent of frame) of whatever sits behind it. */
-const BlurBox: React.FC<{ x: number; y: number; w: number; h: number; px: number }> = ({ x, y, w, h, px }) => (
+const BlurBox: React.FC<{
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+  px: number;
+}> = ({ x, y, w, h, px }) => (
   <div
     style={{
       position: "absolute",
@@ -78,9 +108,15 @@ export const FootageSlot: React.FC<{
           filter: wholeBlur ? `blur(${p.blurPx}px)` : undefined,
         }}
       >
-        <OffthreadVideo src={src(file)} muted style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+        <OffthreadVideo
+          src={src(file)}
+          muted
+          style={{ width: "100%", height: "100%", objectFit: "cover" }}
+        />
         {!p.consentDocumented
-          ? p.blurRegions.map((r, i) => <BlurBox key={i} {...r} px={p.blurPx} />)
+          ? p.blurRegions.map((r, i) => (
+              <BlurBox key={i} {...r} px={p.blurPx} />
+            ))
           : null}
       </div>
     </div>
@@ -95,16 +131,24 @@ export const useScreenGeometry = (file: string, targetW?: number) => {
   const info = assetInfo(file);
   if (!info.exists || !info.width || !info.height) return null;
   const scale = Math.min(MAX_UPSCALE, SCREEN_SCALE);
-  const w = targetW ? Math.min(targetW, info.width * MAX_UPSCALE) : info.width * scale;
+  const w = targetW
+    ? Math.min(targetW, info.width * MAX_UPSCALE)
+    : info.width * scale;
   const s = w / info.width;
-  return { w: Math.round(w), h: Math.round(info.height * s), scale: s, nativeW: info.width, nativeH: info.height };
+  return {
+    w: Math.round(w),
+    h: Math.round(info.height * s),
+    scale: s,
+    nativeW: info.width,
+    nativeH: info.height,
+  };
 };
 
-export const ScreenImage: React.FC<{ file: string; width: number; offsetY?: number }> = ({
-  file,
-  width,
-  offsetY = 0,
-}) => (
+export const ScreenImage: React.FC<{
+  file: string;
+  width: number;
+  offsetY?: number;
+}> = ({ file, width, offsetY = 0 }) => (
   <Img
     src={src(file)}
     style={{

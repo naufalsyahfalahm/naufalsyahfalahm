@@ -39,7 +39,7 @@ const NODES: NodeDef[] = [
     lines: [F.camera],
     fill: COLORS.teal,
     color: COLORS.white,
-    at: 285,
+    at: 265,
   },
   {
     id: "pose",
@@ -49,7 +49,7 @@ const NODES: NodeDef[] = [
     lines: F.pose,
     fill: COLORS.teal,
     color: COLORS.white,
-    at: 325,
+    at: 305,
   },
   {
     id: "physical",
@@ -59,7 +59,7 @@ const NODES: NodeDef[] = [
     lines: [F.physical],
     fill: COLORS.teal,
     color: COLORS.white,
-    at: 380,
+    at: 360,
   },
   {
     id: "questionnaire",
@@ -69,7 +69,7 @@ const NODES: NodeDef[] = [
     lines: [F.questionnaire],
     fill: COLORS.lilac,
     color: COLORS.navy,
-    at: 440,
+    at: 426,
   },
   {
     id: "psych",
@@ -79,7 +79,7 @@ const NODES: NodeDef[] = [
     lines: [F.psych],
     fill: COLORS.lilac,
     color: COLORS.navy,
-    at: 625,
+    at: 620,
   },
   {
     id: "merge",
@@ -89,7 +89,7 @@ const NODES: NodeDef[] = [
     lines: F.merge,
     fill: COLORS.white,
     color: COLORS.navy,
-    at: 735,
+    at: 748,
   },
   {
     id: "recs",
@@ -99,7 +99,7 @@ const NODES: NodeDef[] = [
     lines: F.recs,
     fill: COLORS.grey,
     color: COLORS.navy,
-    at: 865,
+    at: 887,
   },
 ];
 
@@ -110,17 +110,17 @@ type Edge = {
   head: "teal" | "lilac" | "white";
 };
 const EDGES: Edge[] = [
-  { d: "M280 100 V136", color: COLORS.teal, at: 310, head: "teal" },
-  { d: "M280 280 V316", color: COLORS.teal, at: 358, head: "teal" },
-  { d: "M944 260 V316", color: COLORS.lilac, at: 600, head: "lilac" },
-  { d: "M280 420 V460", color: COLORS.white, at: 720, head: "white" },
+  { d: "M280 100 V136", color: COLORS.teal, at: 290, head: "teal" },
+  { d: "M280 280 V316", color: COLORS.teal, at: 338, head: "teal" },
+  { d: "M944 260 V316", color: COLORS.lilac, at: 596, head: "lilac" },
+  { d: "M280 420 V460", color: COLORS.white, at: 733, head: "white" },
   {
     d: "M944 420 V436 Q944 440 940 440 H484 Q480 440 480 444 V460",
     color: COLORS.white,
-    at: 720,
+    at: 733,
     head: "white",
   },
-  { d: "M564 532 H660", color: COLORS.white, at: 850, head: "white" },
+  { d: "M564 532 H660", color: COLORS.white, at: 872, head: "white" },
 ];
 
 const Node: React.FC<NodeDef> = ({ x, y, h, lines, fill, color, at }) => {
