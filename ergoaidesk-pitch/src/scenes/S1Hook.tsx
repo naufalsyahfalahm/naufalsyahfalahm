@@ -8,7 +8,8 @@ import { NeckCloseUp, PersonAtLaptop } from "../components/Illus";
 import { easeInOut, fade, prog } from "../lib/motion";
 
 const CUT = 330; // scene-local frame where the illustration wipes to the close-up
-const PANEL = { w: 1020, h: 646, top: 210 };
+// PiP keep-out: panel right edge 1403 (< 1426) and bottom 762 (< 771); was 1020 x 646 at top 210 (87 %)
+const PANEL = { w: 887, h: 562, top: 200 };
 
 /** Illustrated stand-in for the hook footage: slow slump (time-lapse), then a hand rubbing the neck. */
 const HookIllustration: React.FC = () => {

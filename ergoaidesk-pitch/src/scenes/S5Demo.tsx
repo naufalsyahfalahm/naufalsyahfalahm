@@ -29,6 +29,11 @@ import { easeInOut, fade, prog } from "../lib/motion";
 const OVERLAP = 10; // previous part stays underneath while the next dissolves in
 const SCREEN_H = 900;
 const SCREEN_W = Math.round((SCREEN_H * 780) / 1688); // matches the 780x1688 recordings
+// PiP keep-out (right x >= 1426): the phone sits left of it, scaled to 85 %, right edge at x = 1400, centre y = 430
+const PHONE_SCALE = 0.85;
+const PHONE_RIGHT_X = 1400;
+const PHONE_CY = 430;
+const TEXT_W = 880; // text column: x 96 to 976, clear of the phone (left edge >= about 995 even at the push-in zoom)
 
 const PhoneSlot: React.FC<{
   screenW: number;
@@ -49,10 +54,11 @@ const PhoneSlot: React.FC<{
     <div
       style={{
         position: "absolute",
-        right: SAFE,
-        top: (1080 - (screenH + 34)) / 2,
+        right: 1920 - PHONE_RIGHT_X,
+        top: PHONE_CY - (screenH + 34) / 2,
         opacity: k,
-        transform: `translateX(${(1 - k) * 36}px) scale(${zoom})`,
+        transformOrigin: "100% 50%",
+        transform: `translateX(${(1 - k) * 36}px) scale(${PHONE_SCALE * zoom})`,
       }}
     >
       <PhoneFrame screenW={screenW} screenH={screenH}>
@@ -74,7 +80,7 @@ const Column: React.FC<{ dur: number; children: React.ReactNode }> = ({
         position: "absolute",
         left: SAFE,
         top: 250,
-        width: 1140,
+        width: TEXT_W,
         opacity: o,
         transform: `translateY(${(1 - prog(frame, 6, 24)) * 20}px)`,
       }}
@@ -187,7 +193,7 @@ const ViewBlock: React.FC<{
         position: "absolute",
         left: 0,
         top: 0,
-        width: 1120,
+        width: TEXT_W,
         opacity: o,
         transform: `translateX(${(1 - prog(frame, at, at + 24)) * -40}px)`,
       }}
@@ -233,7 +239,7 @@ const PhotosPart: React.FC<{ dur: number }> = ({ dur }) => {
   const swap = prog(frame, SWAP, SWAP + 12);
   return (
     <AbsoluteFill>
-      <div style={{ position: "absolute", left: SAFE, top: 250, width: 1120 }}>
+      <div style={{ position: "absolute", left: SAFE, top: 250, width: TEXT_W }}>
         <div style={{ position: "relative", height: 330 }}>
           <ViewBlock
             title={TEXT.demo.photoSide}

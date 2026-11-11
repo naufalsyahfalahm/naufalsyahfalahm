@@ -47,7 +47,7 @@ export const SceneProblem: React.FC = () => {
     <AbsoluteFill style={{ background: COLORS.navy }}>
       {/* decorative map: uniform colour and opacity, land mask only; carries no data */}
       <div style={{ position: "absolute", left: 0, top: 170, opacity: fade(frame, 0, 30) }}>
-        <DottedWorldMap width={1920} />
+        <div data-backdrop="world-dots"><DottedWorldMap width={1920} /></div>
       </div>
       <div
         style={{

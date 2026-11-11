@@ -6,7 +6,10 @@ import { IllustrationTag } from "../components/Tag";
 import { T } from "../components/Text";
 import { easeInOut, fade, prog } from "../lib/motion";
 
-const PANEL = { w: 780, h: 580, top: 200 };
+// PiP keep-out: panels and labels end above y = 771 (was 780 x 580 at top 200 = 86.2 %); contents scale with the panel
+const BASE = { w: 780, h: 580 };
+const PANEL = { w: 672, h: 500, top: 196 };
+const K = PANEL.h / BASE.h;
 
 const Observer: React.FC = () => (
   <svg width={300} height={470} viewBox="0 0 300 470">
@@ -30,8 +33,8 @@ export const SceneGap: React.FC = () => {
   const q = prog(frame, 560, 605);
   const headA = fade(frame, 14, 14, 545, 12);
   const headB = fade(frame, 556, 16);
-  const x0 = 96;
-  const x1 = 1920 - 96 - PANEL.w;
+  const x0 = 960 - 84 - PANEL.w;
+  const x1 = 960 + 84;
   return (
     <AbsoluteFill style={{ background: COLORS.navy }}>
       <div style={{ position: "absolute", left: 96, right: 96, top: 96, display: "flex", justifyContent: "center" }}>
@@ -64,11 +67,13 @@ export const SceneGap: React.FC = () => {
           overflow: "hidden",
         }}
       >
-        <div style={{ position: "absolute", left: 30, top: 110 }}>
-          <Observer />
-        </div>
-        <div style={{ position: "absolute", left: 300, top: 14, transform: "scale(0.88)", transformOrigin: "0 0" }}>
-          <RulaClipboard fill={fillL} t={frame} />
+        <div style={{ position: "absolute", left: 0, top: 0, width: BASE.w, height: BASE.h, transform: `scale(${K})`, transformOrigin: "0 0" }}>
+          <div style={{ position: "absolute", left: 30, top: 110 }}>
+            <Observer />
+          </div>
+          <div style={{ position: "absolute", left: 300, top: 14, transform: "scale(0.88)", transformOrigin: "0 0" }}>
+            <RulaClipboard fill={fillL} t={frame} />
+          </div>
         </div>
       </div>
       <div style={{ position: "absolute", left: x0, top: PANEL.top + PANEL.h + 10, width: PANEL.w, opacity: inL }}>
@@ -92,8 +97,10 @@ export const SceneGap: React.FC = () => {
           overflow: "hidden",
         }}
       >
-        <div style={{ position: "absolute", left: 170, top: 14, transform: "scale(0.88)", transformOrigin: "0 0" }}>
-          <PaperQuestionnaire fill={fillR} />
+        <div style={{ position: "absolute", left: 0, top: 0, width: BASE.w, height: BASE.h, transform: `scale(${K})`, transformOrigin: "0 0" }}>
+          <div style={{ position: "absolute", left: 170, top: 14, transform: "scale(0.88)", transformOrigin: "0 0" }}>
+            <PaperQuestionnaire fill={fillR} />
+          </div>
         </div>
       </div>
       <div style={{ position: "absolute", left: x1, top: PANEL.top + PANEL.h + 10, width: PANEL.w, opacity: inR }}>

@@ -39,7 +39,7 @@ export const LayoutProbe: React.FC = () => {
             return false;
           };
           for (const el of all) {
-            if (el.closest("[data-pip]") || ["SCRIPT", "STYLE", "LINK", "META", "TITLE", "HEAD"].includes(el.tagName)) continue;
+            if (el.closest("[data-pip],[data-backdrop]") || ["SCRIPT", "STYLE", "LINK", "META", "TITLE", "HEAD"].includes(el.tagName)) continue;
             const cs = getComputedStyle(el);
             if (!hasPaint(el, cs)) continue;
             const r = el.getBoundingClientRect();

@@ -286,9 +286,11 @@ const HomePhone: React.FC = () => {
       style={{
         position: "absolute",
         left: 1920 - SAFE - (w + 34),
-        top: 100,
+        top: 70,
         opacity: k,
-        transform: `translateX(${(1 - k) * 420}px)`,
+        // PiP keep-out: scaled to 85 % (bottom edge about y = 756 < 771), anchored at the top right
+        transformOrigin: "100% 0",
+        transform: `translateX(${(1 - k) * 420}px) scale(0.85)`,
       }}
     >
       <PhoneFrame screenW={w} screenH={h}>
