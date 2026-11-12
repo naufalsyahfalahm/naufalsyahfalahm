@@ -8,8 +8,8 @@ All screens are mockups with simulated data. Nothing below claims visual quality
 1. **Wrong archive uploaded.** `Alur_asesmen_interaktif-html.zip` contains the HTML design source (`Main.dc.html`, `support.js`, `vendor/`), not `ergoai-mockup-assets.zip`. I used the assets already in this repo (`ergoaidesk-pitch/public/screens/mock-01..07`, `recordings/*.mp4`, `MOCKUP-README.txt`), which match the brief's file names. Copies were verified byte-identical (md5) and are in `ergoai-usage/public/`; `MOCKUP-README.txt` is `README.txt`. The originals were not modified. If your intended zip differs from these files, the trims below must be redone.
 2. **Recordings have grey padding.** Each recording is a 780x1688 canvas, but the UI occupies only the top-left 390x844 (the rest is flat grey, 1x capture on a 2x canvas). The phone shows that box, scaled uniformly by 1.137 and clipped (no distortion). On-screen recording UI is therefore less sharp than the 2x static PNGs. A true 2x re-export would fix this.
 3. **Placeholder avoidance vs. slot length.** The placeholder-free windows of the recordings are short (section 4). Clips are trimmed to those windows and the last clean frame is held, so part of each recording slot is a freeze (dashboard: 78%). Setting `avoidPlaceholders = false` in `src/config.ts` plays the full clips instead (placeholders then visible); I did not render that variant.
-4. **Badge language.** "Mockup antarmuka (data simulasi)" and "Hasil ilustratif, bukan keluaran model nyata" are shown verbatim in both `lang` values (they are required labels). The outro statement follows `lang` (en: "Interface mockup with simulated data"; id: verbatim from the brief).
-5. **Intro badge.** The intro card shows the badge text through the persistent bottom-left badge only (no second copy in the card).
+4. **Persistent badge removed at the author's request (second render).** The bottom-left label "Mockup antarmuka (data simulasi)" is switched off (`showMockupBadge = false` in `src/config.ts`; set `true` to restore). The README.txt/brief requirement for it is therefore not met in this render. Still on screen: the result badge "Hasil ilustratif, bukan keluaran model nyata" on the three result scenes (verbatim in both `lang` values), the outro statement, and the app's own text ("Pratinjau simulasi", "Contoh hasil · simulasi"). No other frame states that the screens are simulated. The outro statement follows `lang` (en: "Interface mockup with simulated data"; id: verbatim from the brief).
+5. **Intro card.** With the badge off, the intro card no longer contains the badge text.
 6. **Pixel format.** ffprobe reports `yuvj420p` (full-range H.264 High). Players handle it; re-render with `--pixel-format yuv420p` if a target requires limited range.
 
 ## 2. Recording probes (ffprobe, originals untouched)
@@ -70,19 +70,20 @@ None. Framing lines (intro "How the assessment works", outro "Phases shown") and
 - `ffprobe out/ergoai-usage.mp4`: h264 High, 1920x1080, 30/1 fps, 2520 frames, duration 84.000 s (target 84 s), 1 video stream, no audio stream (correct: no voiceover.wav).
 - `scripts/verify_stills.py` on 33 stills (first, middle, last frame of each of 11 segments; PNG): 0 failing checks.
   - Safe zone x >= 1426, y >= 771: max pixel difference from the background-only reference `_bg.png` is 0 on all 33 stills (so no content, and the subtle grid is identical to the reference).
-  - Badge present on all 33 stills (rectangle differs from the background and is ink-coloured; OCR reads "mockup" and "simulasi"). App-showing frames are 27 of these.
+  - Badge: switched off, so the check is inverted: no badge-coloured pixels in its rectangle on all 33 stills. (First render, badge on: present on all 33, OCR read "mockup" and "simulasi".)
   - Result badge present on dashboard, ringkasan and temuan stills and absent elsewhere.
   - Step panel content stays inside x 1060-1860, y 200-700 (measured bbox x 1060-1847, y 208-539).
   - Overlay font sizes in `src/` are all >= 36 px (step panel title 68, description 38, stepper and badges 36). Phone UI text is mockup content and is smaller.
   - Contrast pairs 5.14-15.07:1 (all >= 4.5).
-- Not measured: flashing frequency (ripple cycles are ~1.6 s, two per scene; no other fast changes), caption overlap with the phone beyond geometry (badge ends at x 392, stepper at x 384, panel starts at x 1060; the phone ring starts at x 394).
+- Not measured: flashing frequency (ripple cycles are ~1.6 s, two per scene; no other fast changes), caption overlap with the phone beyond geometry (stepper ends at x 384, panel starts at x 1060; the phone ring starts at x 394).
+- The OCR scan of the rendered MP4 (section 4) was run on the first render; the second differs only by the removed badge.
 - Crossfade: spring (damping 200), 10 frames, 24 px slide; text in: 12 frames, 16 px, no bounce.
 
 ## 9. Files written
 
 | File | Size |
 |---|---|
-| out/ergoai-usage.mp4 | 10,446,535 B |
+| out/ergoai-usage.mp4 (second render, badge off) | 10,361,811 B |
 | out/ergoai-usage.srt (en, 11 cues; `npm run srt -- id` for Indonesian) | 1,243 B |
 | out/stills/ (33 stills + `_bg.png`, `verify.json`) | 11 MB total |
 | report.md, captions_check.md, focus_check.md | this folder |

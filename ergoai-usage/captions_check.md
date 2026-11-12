@@ -21,7 +21,7 @@ Indonesian captions (`*_id`) carry the same claims; they were checked against th
 ## Fixed labels
 | Text | Source | Status |
 |---|---|---|
-| Badge "Mockup antarmuka (data simulasi)" | README.txt and brief, verbatim, shown in both languages | Required label |
+| Badge "Mockup antarmuka (data simulasi)" | README.txt and brief | Removed at the author's request (`showMockupBadge = false`) |
 | Result badge "Hasil ilustratif, bukan keluaran model nyata" | Brief, verbatim, shown in both languages. UI support: "Contoh hasil · simulasi. Posisi keypoint dan status setiap hubungan adalah ilustrasi, bukan keluaran model." (mock-06) | Required label; supported |
 
 ## Stepper labels

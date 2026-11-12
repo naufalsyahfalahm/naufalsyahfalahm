@@ -22,6 +22,9 @@ PANEL = (1060, 200, 1860, 700)
 RESULT_IDS = {"dashboard", "ringkasan", "temuan"}
 APP_IDS = {"beranda", "kuesioner", "lateral", "superior", "pose", "tambahan", "dashboard", "ringkasan", "temuan"}
 
+import json as _json
+SHOW_BADGE = _json.load(open(os.path.join(os.path.dirname(__file__), "..", "out", "config.json")))["showMockupBadge"]
+
 try:
     from rapidocr_onnxruntime import RapidOCR
     ocr = RapidOCR()
@@ -61,8 +64,10 @@ for f in files:
     changed = float((dd > 40).mean())
     ink = float((np.abs(crop - np.array([244, 247, 249])).max(axis=2) < 12).mean())
     b_ok = changed > 0.25 and ink > 0.25
+    if not SHOW_BADGE:
+        b_ok = ink < 0.001  # badge switched off: no badge-coloured pixels (the phone shadow may reach this rectangle)
     ocr_txt = ""
-    if ocr is not None:
+    if ocr is not None and SHOW_BADGE:
         res, _ = ocr(np.ascontiguousarray(crop.astype(np.uint8)[:, :, ::-1]))
         ocr_txt = " ".join(t for _, t, _ in (res or []))
         b_ok = b_ok and ("mockup" in ocr_txt.lower() and "simulasi" in ocr_txt.lower())

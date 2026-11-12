@@ -7,6 +7,7 @@ import {
   layout,
   palette,
   recordings,
+  showMockupBadge,
   segmentStarts,
   segments,
   type Lang,
@@ -99,7 +100,7 @@ export const Walkthrough: React.FC<WalkthroughProps> = ({ lang }) => {
         </Sequence>
       ))}
 
-      <Badge />
+      {showMockupBadge ? <Badge /> : null}
     </AbsoluteFill>
   );
 };

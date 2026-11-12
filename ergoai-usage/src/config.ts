@@ -31,6 +31,8 @@ export const lang: Lang = "en";
 export const safeZone = { x: 1426, y: 771 } as const;
 
 /** Verbatim labels required by README.txt; shown in both languages. */
+/** Persistent bottom-left label. Turned off at the author's request; set to true to restore it. */
+export const showMockupBadge = false;
 export const badgeText = "Mockup antarmuka (data simulasi)";
 export const resultBadgeText = "Hasil ilustratif, bukan keluaran model nyata";
 
