@@ -1,54 +1,14 @@
-# Remotion video
+# Ergo AI Desk usage walkthrough (Remotion)
 
-<p align="center">
-  <a href="https://github.com/remotion-dev/logo">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://github.com/remotion-dev/logo/raw/main/animated-logo-banner-dark.apng">
-      <img alt="Animated Remotion Logo" src="https://github.com/remotion-dev/logo/raw/main/animated-logo-banner-light.gif">
-    </picture>
-  </a>
-</p>
+Step-by-step walkthrough built only from the interactive-mockup assets (all screens are mockups with simulated data).
+See `report.md` (probes, trims, placeholders, verification), `captions_check.md`, `focus_check.md`.
 
-Welcome to your Remotion project!
-
-## Commands
-
-**Install Dependencies**
-
-```console
-npm i --loglevel=error
+```bash
+npm install
+npm run dev      # Remotion Studio
+npm run render   # out/ergoai-usage.mp4 + out/ergoai-usage.srt
+npm run stills   # out/stills/
 ```
 
-**Start Preview**
-
-```console
-npm run dev
-```
-
-**Render video**
-
-```console
-npx remotion render
-```
-
-**Upgrade Remotion**
-
-```console
-npx remotion upgrade
-```
-
-## Docs
-
-Get started with Remotion by reading the [fundamentals page](https://www.remotion.dev/docs/the-fundamentals).
-
-## Help
-
-We provide help on our [Discord server](https://discord.gg/6VzzNDwUwV).
-
-## Issues
-
-Found an issue with Remotion? [File an issue here](https://github.com/remotion-dev/remotion/issues/new).
-
-## License
-
-Note that for some entities a company license is needed. [Read the terms here](https://github.com/remotion-dev/remotion/blob/main/LICENSE.md).
+Everything editable is in `src/config.ts` and `src/captions.ts`. Language: `lang` in config or `--props='{"lang":"id"}'`.
+Optional voiceover: `public/audio/voiceover.wav` (run `npm run scan` after adding it).

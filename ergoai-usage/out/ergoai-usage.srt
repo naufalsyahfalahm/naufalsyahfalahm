@@ -1,0 +1,54 @@
+1
+00:00:00,000 --> 00:00:02,967
+Ergo AI Desk
+How the assessment works
+
+2
+00:00:03,000 --> 00:00:09,967
+Start an assessment
+Tap "Mulai Asesmen" to begin.
+
+3
+00:00:10,000 --> 00:00:23,967
+Answer the questionnaire
+Fill sections A to D, then continue with "Next: unggah foto".
+
+4
+00:00:24,000 --> 00:00:29,967
+Capture the lateral view
+Keypoint guidance shows "7 dari 7 keypoint hijau"; then take the photo.
+
+5
+00:00:30,000 --> 00:00:35,967
+Capture the superior view
+Keypoint guidance shows "6 dari 6 keypoint hijau"; then take the photo.
+
+6
+00:00:36,000 --> 00:00:45,967
+Follow the keypoint guidance
+Photo capture stays locked until all keypoints are green.
+
+7
+00:00:46,000 --> 00:00:52,967
+Add follow-up answers
+Answer each question "Ya" or "Tidak", then tap "Analisis dan lihat hasil".
+
+8
+00:00:53,000 --> 00:01:05,967
+Scroll through the results
+Each line links two body points; the legend gives its status.
+
+9
+00:01:06,000 --> 00:01:11,967
+Review the summary
+Keypoint connections are counted as sesuai, belum sesuai or tidak dapat dianalisis.
+
+10
+00:01:12,000 --> 00:01:19,967
+Read the findings
+Each finding shows its source photo, keypoint number and status.
+
+11
+00:01:20,000 --> 00:01:23,967
+Interface mockup with simulated data
+Phases shown
